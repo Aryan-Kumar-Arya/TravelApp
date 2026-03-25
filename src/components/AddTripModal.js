@@ -19,6 +19,8 @@ import Animated, {
     SlideInDown,
 } from 'react-native-reanimated';
 import { theme as T } from '../theme/theme';
+import { ALL_DEMO_CITIES } from '../data/mockData';
+import { Ionicons } from '@expo/vector-icons';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -150,15 +152,39 @@ const AddTripModal = ({ visible, onClose, onSave }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [selectingEnd, setSelectingEnd] = useState(false);
+    const [showSuggestions, setShowSuggestions] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+
+    const onSearchChange = (text) => {
+        setDestination(text);
+        if (text.trim().length > 1) {
+            const filtered = ALL_DEMO_CITIES.filter(city =>
+                city.toLowerCase().includes(text.toLowerCase())
+            ).map((city, idx) => ({ id: idx, displayName: city }));
+            setSuggestions(filtered);
+            setShowSuggestions(true);
+        } else {
+            setShowSuggestions(false);
+        }
+    };
+
+    const handleSelectCity = (city) => {
+        setDestination(city.displayName);
+        setShowSuggestions(false);
+    };
 
     const handleDateSelect = (dateStr) => {
+        const today = new Date().toISOString().split('T')[0];
+        if (dateStr < today) {
+            return; // Don't pick past dates
+        }
+
         if (!selectingEnd) {
             setStartDate(dateStr);
             setEndDate(null);
             setSelectingEnd(true);
         } else {
             if (dateStr < startDate) {
-                // User picked an earlier date — swap
                 setStartDate(dateStr);
                 setEndDate(startDate);
             } else {
@@ -218,10 +244,33 @@ const AddTripModal = ({ visible, onClose, onSave }) => {
                         placeholder="Enter city (e.g. Tokyo, Paris)"
                         placeholderTextColor={T.text.tertiary}
                         value={destination}
-                        onChangeText={setDestination}
+                        onChangeText={onSearchChange}
                         autoCorrect={false}
+                        onFocus={() => {
+                            if (destination.trim().length > 0) setShowSuggestions(true);
+                        }}
                     />
                 </View>
+
+                {/* Dropdown Suggestions */}
+                {showSuggestions && suggestions.length > 0 && (
+                    <View style={styles.dropdown}>
+                        <ScrollView keyboardShouldPersistTaps="handled" nestedScrollEnabled={true} style={{ maxHeight: 200 }}>
+                            {suggestions.map((item) => (
+                                <TouchableOpacity 
+                                    key={item.id.toString()}
+                                    style={styles.suggestionItem}
+                                    onPress={() => handleSelectCity(item)}
+                                >
+                                    <Ionicons name="location-outline" size={18} color={T.text.secondary} />
+                                    <Text style={styles.suggestionText} numberOfLines={1}>
+                                        {item.displayName}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </View>
+                )}
 
                 {/* Date Picker */}
                 <Text style={styles.datePickerLabel}>
@@ -435,6 +484,32 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '600',
         color: T.text.tertiary,
+    },
+    // Autocomplete
+    dropdown: {
+        position: 'absolute',
+        top: 180, // Positioned below the input
+        left: 24,
+        right: 24,
+        backgroundColor: T.bg.card,
+        borderRadius: T.radius.md,
+        borderWidth: 1,
+        borderColor: T.border.subtle,
+        zIndex: 1000,
+        ...T.shadow.soft,
+    },
+    suggestionItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: T.border.subtle,
+    },
+    suggestionText: {
+        fontSize: 15,
+        color: T.text.primary,
+        marginLeft: 10,
     },
 });
 

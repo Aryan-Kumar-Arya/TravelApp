@@ -1,0 +1,50 @@
+id,city,country,region,lat,lng,timezone,image
+loc-chiang-mai,Chiang Mai,Thailand,Southeast Asia,18.7883,98.9853,Asia/Bangkok,https://images.unsplash.com/photo-1528360983277-13d401cdc186?auto=format&fit=crop&w=800&q=80
+loc-bangkok,Bangkok,Thailand,Southeast Asia,13.7563,100.5018,Asia/Bangkok,https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80
+loc-kuala-lumpur,Kuala Lumpur,Malaysia,Southeast Asia,3.1390,101.6869,Asia/Kuala_Lumpur,https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80
+loc-bali-canggu,Bali (Canggu),Indonesia,Southeast Asia,-8.6478,115.1385,Asia/Makassar,https://images.unsplash.com/photo-1537953773345-d172ccf13cf4?auto=format&fit=crop&w=800&q=80
+loc-ubud,Ubud,Indonesia,Southeast Asia,-8.5069,115.2625,Asia/Makassar,https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80
+loc-taipei,Taipei,Taiwan,East Asia,25.0330,121.5654,Asia/Taipei,https://images.unsplash.com/photo-1470004914212-05527e49370b?auto=format&fit=crop&w=800&q=80
+loc-tokyo,Tokyo,Japan,East Asia,35.6762,139.6503,Asia/Tokyo,https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=800&q=80
+loc-lisbon,Lisbon,Portugal,Western Europe,38.7223,-9.1393,Europe/Lisbon,https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80
+loc-porto,Porto,Portugal,Western Europe,41.1579,-8.6291,Europe/Lisbon,https://images.unsplash.com/photo-1555881400-74d7acaacd8b?auto=format&fit=crop&w=800&q=80
+loc-amsterdam,Amsterdam,Netherlands,Western Europe,52.3676,4.9041,Europe/Amsterdam,https://images.unsplash.com/photo-1534351590666-13e3e96b5017?auto=format&fit=crop&w=800&q=80
+loc-paris,Paris,France,Western Europe,48.8566,2.3522,Europe/Paris,https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=800&q=80
+loc-barcelona,Barcelona,Spain,Southern Europe,41.3874,2.1686,Europe/Madrid,https://images.unsplash.com/photo-1583422409516-2895a77efded?auto=format&fit=crop&w=800&q=80
+loc-valencia,Valencia,Spain,Southern Europe,39.4699,-0.3763,Europe/Madrid,https://images.unsplash.com/photo-1558531304-a4773b7e3a9c?auto=format&fit=crop&w=800&q=80
+loc-seville,Seville,Spain,Southern Europe,37.3891,-5.9845,Europe/Madrid,https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?auto=format&fit=crop&w=800&q=80
+loc-hvar,Hvar,Croatia,Southern Europe,43.1729,16.4411,Europe/Zagreb,https://images.unsplash.com/photo-1555993539-1732b0258235?auto=format&fit=crop&w=800&q=80
+loc-valletta,Valletta,Malta,Southern Europe,35.8989,14.5146,Europe/Malta,https://images.unsplash.com/photo-1514890547357-a9ee288728e0?auto=format&fit=crop&w=800&q=80
+loc-budapest,Budapest,Hungary,Central Europe,47.4979,19.0402,Europe/Budapest,https://images.unsplash.com/photo-1551867633-194f125bddfa?auto=format&fit=crop&w=800&q=80
+loc-tbilisi,Tbilisi,Georgia,Caucasus,41.7151,44.8271,Asia/Tbilisi,https://images.unsplash.com/photo-1602080858428-57798f8c9a87?auto=format&fit=crop&w=800&q=80
+loc-mexico-city,Mexico City,Mexico,Latin America,19.4326,-99.1332,America/Mexico_City,https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=800&q=80
+loc-playa-del-carmen,Playa del Carmen,Mexico,Latin America,20.6296,-87.0739,America/Cancun,https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80
+loc-medellin,Medellín,Colombia,Latin America,6.2442,-75.5812,America/Bogota,https://images.unsplash.com/photo-1598887141338-571d7d5bcd68?auto=format&fit=crop&w=800&q=80
+loc-buenos-aires,Buenos Aires,Argentina,Latin America,-34.6037,-58.3816,America/Argentina/Buenos_Aires,https://images.unsplash.com/photo-1589909202802-8f4aadce1849?auto=format&fit=crop&w=800&q=80
+loc-cape-town,Cape Town,South Africa,Africa,-33.9249,18.4241,Africa/Johannesburg,https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80
+loc-leh,Leh,India,North India,34.1526,77.5771,Asia/Kolkata,https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80
+loc-old-manali,Old Manali,India,North India,32.2727,77.1892,Asia/Kolkata,https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80
+loc-kasol,Kasol,India,North India,32.0101,77.3152,Asia/Kolkata,https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80
+loc-bir-billing,Bir Billing,India,North India,31.8837,76.7221,Asia/Kolkata,https://images.unsplash.com/photo-1530870110042-98b2cb110834?auto=format&fit=crop&w=800&q=80
+loc-dharamshala,Dharamshala,India,North India,32.2190,76.3234,Asia/Kolkata,https://images.unsplash.com/photo-1466921583968-f07aa80c526e?auto=format&fit=crop&w=800&q=80
+loc-mcleod-ganj,McLeod Ganj,India,North India,32.2426,76.3213,Asia/Kolkata,https://images.unsplash.com/photo-1466921583968-f07aa80c526e?auto=format&fit=crop&w=800&q=80
+loc-rishikesh,Rishikesh,India,North India,30.0869,78.2676,Asia/Kolkata,https://images.unsplash.com/photo-1583367735697-00a81c93e40f?auto=format&fit=crop&w=800&q=80
+loc-amritsar,Amritsar,India,North India,31.6340,74.8723,Asia/Kolkata,https://images.unsplash.com/photo-1587922546307-776227941871?auto=format&fit=crop&w=800&q=80
+loc-darjeeling,Darjeeling,India,North India,27.0360,88.2627,Asia/Kolkata,https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=800&q=80
+loc-shillong,Shillong,India,Northeast India,25.5788,91.8933,Asia/Kolkata,https://images.unsplash.com/photo-1477950014900-c38d0d0d0c4e?auto=format&fit=crop&w=800&q=80
+loc-varanasi,Varanasi,India,North India,25.3176,82.9739,Asia/Kolkata,https://images.unsplash.com/photo-1561361058-c24cecae35ca?auto=format&fit=crop&w=800&q=80
+loc-jaipur,Jaipur,India,Rajasthan,26.9124,75.7873,Asia/Kolkata,https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80
+loc-udaipur,Udaipur,India,Rajasthan,24.5854,73.7125,Asia/Kolkata,https://images.unsplash.com/photo-1587922546307-776227941871?auto=format&fit=crop&w=800&q=80
+loc-jodhpur,Jodhpur,India,Rajasthan,26.2389,73.0243,Asia/Kolkata,https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80
+loc-pushkar,Pushkar,India,Rajasthan,26.4897,74.5511,Asia/Kolkata,https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80
+loc-mumbai,Mumbai,India,West India,19.0760,72.8777,Asia/Kolkata,https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=800&q=80
+loc-goa,Goa,India,West India,15.2993,74.1240,Asia/Kolkata,https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80
+loc-bangalore,Bangalore,India,South India,12.9716,77.5946,Asia/Kolkata,https://images.unsplash.com/photo-1596176530529-78163a4f7af2?auto=format&fit=crop&w=800&q=80
+loc-mysore,Mysore,India,South India,12.2958,76.6394,Asia/Kolkata,https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=800&q=80
+loc-coorg,Coorg,India,South India,12.3375,75.8069,Asia/Kolkata,https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?auto=format&fit=crop&w=800&q=80
+loc-gokarna,Gokarna,India,South India,14.5479,74.3188,Asia/Kolkata,https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80
+loc-hampi,Hampi,India,South India,15.3350,76.4600,Asia/Kolkata,https://images.unsplash.com/photo-1620766182966-c6eb5ed2b788?auto=format&fit=crop&w=800&q=80
+loc-kochi,Kochi,India,South India,9.9312,76.2673,Asia/Kolkata,https://images.unsplash.com/photo-1557750255-c06826e74a0d?auto=format&fit=crop&w=800&q=80
+loc-varkala,Varkala,India,South India,8.7379,76.7163,Asia/Kolkata,https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80
+loc-puducherry,Puducherry,India,South India,11.9416,79.8083,Asia/Kolkata,https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80
+loc-andaman-islands,Andaman Islands,India,Indian Islands,11.7401,92.6586,Asia/Kolkata,https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80

@@ -1,0 +1,11 @@
+id,user_id,destination_city,start_date,end_date
+trip-initial,current-user,Paris,2026-04-10,2026-04-20
+trip-t1-1,t1,Bali,2026-04-08,2026-04-16
+trip-t1-2,t1,Paris,2026-04-17,2026-04-25
+trip-t2-1,t2,Goa,2026-04-12,2026-04-22
+trip-t2-2,t2,Bali,2026-04-05,2026-04-15
+trip-t3-1,t3,Rishikesh,2026-04-10,2026-04-25
+trip-t4-1,t4,Paris,2026-04-09,2026-04-14
+trip-t5-1,t5,Mexico City,2026-04-10,2026-04-20
+trip-past-1,current-user,Tokyo,2025-10-05,2025-10-15
+trip-past-2,current-user,London,2024-05-12,2024-05-20

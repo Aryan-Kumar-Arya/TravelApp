@@ -11,78 +11,59 @@ import {
     ScrollView,
     Alert,
     FlatList,
-    ActivityIndicator
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../context/AuthContext';
 import { theme as T } from '../theme/theme';
 import { Ionicons } from '@expo/vector-icons';
+import { LOCATIONS } from '../data/locations';
 
-export default function ProfileSetupScreen({ navigation }) {
-    const { currentUser, completeProfileSetup } = useAuth();
+const INTEREST_OPTIONS = [
+  'Backpacking', 'Luxury', 'Foodie', 'Photography', 'Nature', 
+  'Nightlife', 'Culture', 'History', 'Adventure', 'Relaxation', 
+  'Shopping', 'Wellness', 'Road Trips', 'Beaches', 'Mountains', 
+  'Art & Museums', 'Festivals', 'Surfing', 'Architecture', 'Solo Travel'
+];
+
+export default function ProfileSetupScreen({ route, navigation }) {
     
-    // Photo state: Array of 3 slots (null if empty, string URI if filled)
-    const [photos, setPhotos] = useState([null, null, null]);
+    // Using route params from Login
+    const { name } = route.params || {};
+    
+    // Photo state: Array of 4 slots (null if empty, string URI if filled)
+    const [photos, setPhotos] = useState([null, null, null, null]);
     const [bio, setBio] = useState('');
+    const [selectedInterests, setSelectedInterests] = useState([]);
     
     // Autocomplete State for Home Location
     const [homeCity, setHomeCity] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const searchTimeout = useRef(null);
 
-    // Get first name from full name
-    const firstName = currentUser?.name?.split(' ')[0] || '';
-
-    // --- Nominatim API Autocomplete (Shared logic with Trip Details) ---
-    const fetchSuggestions = async (query) => {
-        if (!query || query.trim().length < 2) {
-            setSuggestions([]);
-            return;
-        }
-
-        setIsSearching(true);
-        try {
-            const url = `https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(query)}&format=json&limit=5&featuretype=city`;
-            const response = await fetch(url, {
-                headers: {
-                    'User-Agent': 'VayaTravelApp/1.0',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                }
-            });
-            
-            const data = await response.json();
-            
-            const formattedSuggestions = data.map(item => {
-                const parts = item.display_name.split(',');
-                const city = parts[0].trim();
-                const country = parts.length > 1 ? parts[parts.length - 1].trim() : '';
-                return {
-                    id: item.place_id,
-                    name: item.name,
-                    displayName: country ? `${city}, ${country}` : city,
-                };
-            });
-            
-            setSuggestions(formattedSuggestions);
-        } catch (error) {
-            console.error('Failed to fetch cities:', error);
-        } finally {
-            setIsSearching(false);
-        }
-    };
+    // Get first name from passed name
+    const firstName = name?.split(' ')[0] || '';
 
     const onSearchChange = (text) => {
         setSearchQuery(text);
         setHomeCity(''); // Clear actual selection when typing
-        setShowSuggestions(true);
-        
-        if (searchTimeout.current) clearTimeout(searchTimeout.current);
-        searchTimeout.current = setTimeout(() => {
-            fetchSuggestions(text);
-        }, 400);
+        if (text.trim().length > 0) {
+            const query = text.toLowerCase();
+            const filtered = LOCATIONS.filter(loc => 
+                loc.city.toLowerCase().includes(query) || 
+                loc.country.toLowerCase().includes(query)
+            );
+            const formatted = filtered.slice(0, 8).map((loc, index) => ({
+                id: `${loc.city}-${index}`,
+                displayName: `${loc.city}, ${loc.country}`
+            }));
+            setSuggestions(formatted);
+            setShowSuggestions(true);
+        } else {
+            setSuggestions([]);
+            setShowSuggestions(false);
+        }
     };
 
     const handleSelectCity = (city) => {
@@ -119,9 +100,20 @@ export default function ProfileSetupScreen({ navigation }) {
         setPhotos(newPhotos);
     };
 
+    const toggleInterest = (interest) => {
+        if (selectedInterests.includes(interest)) {
+            setSelectedInterests(selectedInterests.filter(i => i !== interest));
+        } else {
+            // Remove limit so users can choose how many they want
+            setSelectedInterests([...selectedInterests, interest]);
+        }
+    };
+
     const hasRequiredFields = () => {
         const hasPhoto = photos.some(p => p !== null);
-        return hasPhoto && bio.trim().length > 0 && homeCity.trim().length > 0;
+        const hasMinimumTags = selectedInterests.length >= 5;
+        const hasBio = bio.trim().length > 0;
+        return hasPhoto && homeCity.trim().length > 0 && hasMinimumTags && hasBio;
     };
 
     const handleContinue = async () => {
@@ -129,28 +121,39 @@ export default function ProfileSetupScreen({ navigation }) {
         
         const uploadedPhotos = photos.filter(p => p !== null);
         
-        await completeProfileSetup(uploadedPhotos, bio.trim(), homeCity.trim());
-        navigation.replace('TripDetails');
+        // Navigate to next step instead of updating AuthContext immediately
+        navigation.navigate('HomeRecommendation', {
+            ...route.params,
+            profileData: {
+                photos: uploadedPhotos,
+                bio: bio.trim(),
+                homeCity: homeCity.trim(),
+                selectedInterests,
+            }
+        });
     };
 
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-        >
-            <ScrollView 
-                contentContainerStyle={styles.content}
-                keyboardShouldPersistTaps="handled"
+        <SafeAreaView style={{ flex: 1, backgroundColor: T.bg.primary }}>
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                keyboardVerticalOffset={0}
             >
-                {/* ── Progress & Header ── */}
-                <View style={styles.header}>
-                    <Text style={styles.progressText}>Step 1 of 2</Text>
-                    <Text style={styles.title}>
-                        Hello{firstName ? ` ${firstName}` : ''}!
-                    </Text>
-                    <Text style={styles.subtitle}>Set up your profile to show off your travel style (1 photo min).</Text>
-                </View>
+                <ScrollView 
+                    contentContainerStyle={styles.content}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    {/* ── Progress & Header ── */}
+                    <View style={styles.header}>
+                        <View style={styles.headerTop}>
+                            <Text style={styles.progressText}>Step 1 of 3</Text>
+                        </View>
+                        <Text style={styles.title}>
+                            Hello{firstName ? ` ${firstName}` : ''}!
+                        </Text>
+                        <Text style={styles.subtitle}>Let's create your profile.</Text>
+                    </View>
 
                 {/* ── Photo Picker ── */}
                 <View style={styles.photoGrid}>
@@ -159,7 +162,6 @@ export default function ProfileSetupScreen({ navigation }) {
                             key={index}
                             style={[
                                 styles.photoSlot,
-                                index === 0 && styles.photoSlotMain, // First slot is larger
                                 uri && styles.photoSlotFilled
                             ]}
                             onPress={() => {
@@ -191,29 +193,26 @@ export default function ProfileSetupScreen({ navigation }) {
                         <Ionicons name="home-outline" size={20} color={T.text.tertiary} style={styles.searchIcon} />
                         <TextInput
                             style={styles.searchInput}
-                            placeholder="Where do you live? (e.g. New York)"
+                            placeholder="Where do you live?"
                             placeholderTextColor={T.text.tertiary}
                             value={searchQuery}
                             onChangeText={onSearchChange}
                             autoCorrect={false}
-                            onFocus={() => setShowSuggestions(true)}
+                            onFocus={() => {
+                                if (searchQuery.trim().length > 0) setShowSuggestions(true);
+                            }}
                             onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
                         />
-                        {isSearching && (
-                            <ActivityIndicator size="small" color={T.brand.primary} style={styles.searchLoader} />
-                        )}
                     </View>
                     
                     {/* Dropdown Suggestions */}
                     {showSuggestions && searchQuery.length > 1 && (
                         <View style={styles.dropdown}>
                             {suggestions.length > 0 ? (
-                                <FlatList
-                                    data={suggestions}
-                                    keyExtractor={(item) => item.id.toString()}
-                                    keyboardShouldPersistTaps="handled"
-                                    renderItem={({ item }) => (
+                                <ScrollView keyboardShouldPersistTaps="handled" nestedScrollEnabled={true}>
+                                    {suggestions.map((item) => (
                                         <TouchableOpacity 
+                                            key={item.id.toString()}
                                             style={styles.suggestionItem}
                                             onPress={() => handleSelectCity(item)}
                                         >
@@ -222,13 +221,13 @@ export default function ProfileSetupScreen({ navigation }) {
                                                 {item.displayName}
                                             </Text>
                                         </TouchableOpacity>
-                                    )}
-                                />
-                            ) : !isSearching ? (
+                                    ))}
+                                </ScrollView>
+                            ) : (
                                 <View style={styles.suggestionItem}>
                                     <Text style={styles.noResultsText}>No cities found.</Text>
                                 </View>
-                            ) : null}
+                            )}
                         </View>
                     )}
                 </View>
@@ -238,7 +237,7 @@ export default function ProfileSetupScreen({ navigation }) {
                     <Text style={styles.label}>Your Bio</Text>
                     <TextInput
                         style={styles.bioInput}
-                        placeholder="What kind of traveler are you? e.g. 'Coffee snob looking for the best cafes in town...'"
+                        placeholder="e.g. 'Coffee snob looking for the best cafes in town...'"
                         placeholderTextColor={T.text.tertiary}
                         value={bio}
                         onChangeText={setBio}
@@ -248,6 +247,27 @@ export default function ProfileSetupScreen({ navigation }) {
                         onFocus={() => setShowSuggestions(false)} // Close dropdown if tapping bio
                     />
                     <Text style={styles.charCount}>{bio.length}/150</Text>
+                </View>
+
+                {/* ── Interests ── */}
+                <View style={[styles.inputContainer, { marginBottom: 40 }]}>
+                    <Text style={styles.label}>Interests (5 recommended)</Text>
+                    <View style={styles.interestsContainer}>
+                        {INTEREST_OPTIONS.map((interest, idx) => {
+                            const isSelected = selectedInterests.includes(interest);
+                            return (
+                                <TouchableOpacity 
+                                    key={idx}
+                                    style={[styles.interestPill, isSelected && styles.interestPillSelected]}
+                                    onPress={() => toggleInterest(interest)}
+                                >
+                                    <Text style={[styles.interestText, isSelected && styles.interestTextSelected]}>
+                                        {interest}
+                                    </Text>
+                                </TouchableOpacity>
+                            );
+                        })}
+                    </View>
                 </View>
 
             </ScrollView>
@@ -266,6 +286,7 @@ export default function ProfileSetupScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 
@@ -275,12 +296,21 @@ const styles = StyleSheet.create({
         backgroundColor: T.bg.primary,
     },
     content: {
-        paddingTop: 60,
-        paddingHorizontal: 24,
-        paddingBottom: 40,
+        paddingTop: 20,
+        paddingHorizontal: 20,
+        paddingBottom: 20,
     },
     header: {
-        marginBottom: 32,
+        marginBottom: 16,
+    },
+    headerTop: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 16,
+    },
+    backBtn: {
+        padding: 4,
     },
     progressText: {
         fontSize: 13,
@@ -304,25 +334,20 @@ const styles = StyleSheet.create({
     photoGrid: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: 12,
-        marginBottom: 32,
+        gap: 8,
+        marginBottom: 12,
     },
     photoSlot: {
-        width: '48%', // Adjusted slightly to account for gap reliably
-        aspectRatio: 3/4,
+        width: '48%', 
+        aspectRatio: 1.1,
         backgroundColor: T.bg.input,
         borderRadius: T.radius.md,
         borderWidth: 2,
-        borderColor: 'dashed',
         borderStyle: 'dashed',
         borderColor: T.border.medium,
         justifyContent: 'center',
         alignItems: 'center',
         overflow: 'hidden',
-    },
-    photoSlotMain: {
-        width: '100%',
-        aspectRatio: 16/10,
     },
     photoSlotFilled: {
         borderStyle: 'solid',
@@ -375,10 +400,10 @@ const styles = StyleSheet.create({
     bioInput: {
         backgroundColor: T.bg.input,
         color: T.text.primary,
-        padding: 16,
+        padding: 12,
         borderRadius: T.radius.md,
-        fontSize: 16,
-        minHeight: 120,
+        fontSize: 15,
+        minHeight: 80,
         borderWidth: 1,
         borderColor: T.border.subtle,
     },
@@ -386,9 +411,36 @@ const styles = StyleSheet.create({
         color: T.text.tertiary,
         fontSize: 12,
         textAlign: 'right',
-        marginTop: 8,
+        marginTop: 4,
     },
     
+    // --- Interests Styles ---
+    interestsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 10,
+    },
+    interestPill: {
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 20,
+        backgroundColor: T.bg.input,
+        borderWidth: 1,
+        borderColor: T.border.subtle,
+    },
+    interestPillSelected: {
+        backgroundColor: T.brand.primary,
+        borderColor: T.brand.primary,
+    },
+    interestText: {
+        color: T.text.secondary,
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    interestTextSelected: {
+        color: '#FFFFFF',
+    },
+
     // --- Custom Search & Dropdown Styles ---
     searchContainer: {
         flexDirection: 'row',
@@ -451,8 +503,8 @@ const styles = StyleSheet.create({
     },
 
     footer: {
-        padding: 24,
-        paddingBottom: Platform.OS === 'ios' ? 40 : 24,
+        padding: 16,
+        paddingBottom: Platform.OS === 'ios' ? 30 : 16,
         backgroundColor: T.bg.primary,
         borderTopWidth: 1,
         borderTopColor: T.border.subtle,

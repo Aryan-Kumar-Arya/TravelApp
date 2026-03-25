@@ -1,0 +1,11 @@
+id,name,age,avatar,bio,home_city,interests,is_premium,past_trips
+current-user,You,27,🧑‍💻,Adventure seeker exploring the world one city at a time ✈️,"San Francisco, USA","['Photography', 'Hiking']",false,"['Tokyo, Japan: 2025-10-05 to 2025-10-15', 'London, UK: 2024-05-12 to 2024-05-20']"
+t1,Alex Chen,26,🧔,Photographer chasing golden hours. Working remotely until my laptop dies.,Toronto,"['Photography', 'Street Food', 'Jazz']",false,[]
+t2,Priya Sharma,29,👩‍🦱,Digital nomad & coffee snob. Always looking for fast WiFi and good vibes.,Mumbai,"['Coffee', 'Remote Work', 'Art']",false,[]
+t3,Jordan Ellis,24,🧑‍🎤,Backpacker on a mission to hit 30 countries before 30. Hostel life.,London,"['Hiking', 'History', 'Hostels']",false,[]
+t4,Luna Kim,28,👩‍🎨,Sketching my way through every museum. Give me wine and culture.,Seoul,"['Art', 'Museums', 'Wine']",false,[]
+t5,Marco Rossi,31,👨‍🍳,Italian finding inspiration in new cuisines. Let's cook together!,Rome,"['Cooking', 'Wine', 'Markets']",false,[]
+l1,Marie Dupont,30,🇫🇷,Born & raised in Le Marais. I know every hidden courtyard.,"Paris, France","['Wine Bars', 'Street Art', 'Vintage Shops']",true,[]
+l3,Ketut Astawa,34,🏄‍♂️,Surf instructor in Canggu. Best waves and warungs.,"Bali, Indonesia","['Surfing', 'Nasi Goreng', 'Beach Clubs']",true,[]
+l33,Deepak Rao,29,💻,Startup founder and coffee addict. Bangalore's tech scene is 🔥.,"Bangalore, India","['Tech', 'Craft Beer', 'Live Music']",true,[]
+l35,Farhan Sheikh,30,🎬,Bollywood extra turned city guide. I know every shooting location.,"Mumbai, India","['Bollywood', 'Street Food', 'Marine Drive']",true,[]

@@ -9,15 +9,27 @@ import {
     Platform,
     Alert,
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    Dimensions
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useAuth } from '../context/AuthContext';
 import { theme as T } from '../theme/theme';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Ionicons } from '@expo/vector-icons';
+import { LOCATIONS } from '../data/locations';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 
-export default function TripDetailsScreen({ navigation }) {
-    const { completeTripSetup } = useAuth();
+const { width } = Dimensions.get('window');
+
+export default function TripDetailsScreen({ route, navigation }) {
+    const { completeTripSetup, currentUser, signUp, logIn, completeProfileSetup, addLikedRecommendation } = useAuth();
     
     // Form State
     const [destination, setDestination] = useState('');
@@ -27,69 +39,126 @@ export default function TripDetailsScreen({ navigation }) {
     // Autocomplete State
     const [searchQuery, setSearchQuery] = useState('');
     const [suggestions, setSuggestions] = useState([]);
-    const [isSearching, setIsSearching] = useState(false);
     const [showSuggestions, setShowSuggestions] = useState(false);
-    const searchTimeout = useRef(null);
     
     // Date Picker State
     const [showStartDatePicker, setShowStartDatePicker] = useState(false);
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [hasSelectedStartDate, setHasSelectedStartDate] = useState(false);
     const [hasSelectedEndDate, setHasSelectedEndDate] = useState(false);
+    
+    // Animation State
+    const [isGenerating, setIsGenerating] = useState(false);
+    
+    // New Advanced Animation Values
+    const globeRotation = useSharedValue(0);
+    const ring1Scale = useSharedValue(1);
+    const ring1Opacity = useSharedValue(1);
+    const ring2Scale = useSharedValue(1);
+    const ring2Opacity = useSharedValue(1);
+    const ring3Scale = useSharedValue(1);
+    const ring3Opacity = useSharedValue(1);
+    const textOpacity = useSharedValue(0.5);
 
-    // --- Nominatim API Autocomplete ---
-    const fetchSuggestions = async (query) => {
-        if (!query || query.trim().length < 2) {
-            setSuggestions([]);
-            return;
-        }
+    useEffect(() => {
+        if (isGenerating) {
+            globeRotation.value = withRepeat(withTiming(360, { duration: 4000 }), -1, false);
+            
+            // Staggered ripples
+            const createRipple = (scale, opacity) => {
+                scale.value = 1;
+                opacity.value = 1;
+                scale.value = withRepeat(withTiming(4, { duration: 2500 }), -1, false);
+                opacity.value = withRepeat(withTiming(0, { duration: 2500 }), -1, false);
+            };
 
-        setIsSearching(true);
-        try {
-            // Using OpenStreetMap Nominatim API 
-            // format=json, featuretype=city to restrict to cities
-            const url = `https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(query)}&format=json&limit=5&featuretype=city`;
-            const response = await fetch(url, {
-                headers: {
-                    // Nominatim requires a User-Agent identifying the app
-                    'User-Agent': 'VayaTravelApp/1.0',
-                    'Accept-Language': 'en-US,en;q=0.9',
+            createRipple(ring1Scale, ring1Opacity);
+            setTimeout(() => createRipple(ring2Scale, ring2Opacity), 800);
+            setTimeout(() => createRipple(ring3Scale, ring3Opacity), 1600);
+
+            textOpacity.value = withRepeat(withSequence(withTiming(1, { duration: 800 }), withTiming(0.4, { duration: 800 })), -1, true);
+
+            
+            const finalizeSetup = async () => {
+                await new Promise(resolve => setTimeout(resolve, 3500));
+                
+                const { email, password, name, isLogin, profileData, recommendation } = route.params || {};
+                
+                // 1. Authenticate / Create User
+                if (isLogin) {
+                    await logIn(email, password);
+                } else if (email) {
+                    await signUp(email, password, name);
                 }
-            });
-            
-            const data = await response.json();
-            
-            // Map the Nominatim response to a cleaner format (City, Country)
-            const formattedSuggestions = data.map(item => {
-                const parts = item.display_name.split(',');
-                const city = parts[0].trim();
-                const country = parts.length > 1 ? parts[parts.length - 1].trim() : '';
-                return {
-                    id: item.place_id,
-                    name: item.name,
-                    displayName: country ? `${city}, ${country}` : city,
-                };
-            });
-            
-            setSuggestions(formattedSuggestions);
-        } catch (error) {
-            console.error('Failed to fetch cities:', error);
-            // Non-fatal error, silently fail autocomplete is fine for now
-        } finally {
-            setIsSearching(false);
+                
+                // 2. Hydrate Profile
+                if (profileData) {
+                    await completeProfileSetup(
+                        profileData.photos, 
+                        profileData.bio, 
+                        profileData.homeCity, 
+                        profileData.selectedInterests
+                    );
+                }
+                
+                // 3. Keep Home Recommendation
+                if (recommendation) {
+                    addLikedRecommendation(recommendation);
+                }
+
+                // 4. Create Trip and finalize session (which logs them in)
+                await completeTripSetup(
+                    destination.trim(), 
+                    formatDate(startDate), 
+                    formatDate(endDate)
+                );
+            };
+            finalizeSetup();
         }
-    };
+    }, [isGenerating]);
+
+    const animatedGlobe = useAnimatedStyle(() => ({
+        transform: [{ rotate: `${globeRotation.value}deg` }]
+    }));
+
+    const ring1Style = useAnimatedStyle(() => ({
+        transform: [{ scale: ring1Scale.value }],
+        opacity: ring1Opacity.value,
+    }));
+
+    const ring2Style = useAnimatedStyle(() => ({
+        transform: [{ scale: ring2Scale.value }],
+        opacity: ring2Opacity.value,
+    }));
+
+    const ring3Style = useAnimatedStyle(() => ({
+        transform: [{ scale: ring3Scale.value }],
+        opacity: ring3Opacity.value,
+    }));
+
+    const animatedTextStyle = useAnimatedStyle(() => ({
+      opacity: textOpacity.value,
+    }));
 
     const onSearchChange = (text) => {
         setSearchQuery(text);
         setDestination(''); // Clear actual selection when typing
-        setShowSuggestions(true);
-        
-        // Debounce the API call by 400ms
-        if (searchTimeout.current) clearTimeout(searchTimeout.current);
-        searchTimeout.current = setTimeout(() => {
-            fetchSuggestions(text);
-        }, 400);
+        if (text.trim().length > 0) {
+            const query = text.toLowerCase();
+            const filtered = LOCATIONS.filter(loc => 
+                loc.city.toLowerCase().includes(query) || 
+                loc.country.toLowerCase().includes(query)
+            );
+            const formatted = filtered.slice(0, 8).map((loc, index) => ({
+                id: `${loc.city}-${index}`,
+                displayName: `${loc.city}, ${loc.country}`
+            }));
+            setSuggestions(formatted);
+            setShowSuggestions(true);
+        } else {
+            setSuggestions([]);
+            setShowSuggestions(false);
+        }
     };
 
     const handleSelectCity = (city) => {
@@ -132,24 +201,62 @@ export default function TripDetailsScreen({ navigation }) {
             Alert.alert('Invalid Date', 'End date cannot be before start date.');
             return;
         }
+        
+        const homeCityCheck = route.params?.profileData?.homeCity || currentUser?.home_city;
+        if (homeCityCheck && destination.trim().toLowerCase() === homeCityCheck.toLowerCase()) {
+            Alert.alert("Hold on", "You cannot select the same city you live in for your trip.");
+            return;
+        }
 
-        await completeTripSetup(
-            destination.trim(), 
-            formatDate(startDate), 
-            formatDate(endDate)
-        );
+        setIsGenerating(true);
     };
 
+    if (isGenerating) {
+        return (
+            <View style={styles.loadingContainer}>
+              <View style={styles.loadingContent}>
+                {/* ── Buffering State (Globe + Radar) ── */}
+                {isGenerating && (
+                    <View style={styles.loadingOverlay}>
+                        <View style={styles.radarContainer}>
+                            <Animated.View style={[styles.radarRing, ring3Style]} />
+                            <Animated.View style={[styles.radarRing, ring2Style]} />
+                            <Animated.View style={[styles.radarRing, ring1Style]} />
+                            <Animated.View style={[styles.globeContainer, animatedGlobe]}>
+                                <Text style={{fontSize: 50}}>🌍</Text>
+                            </Animated.View>
+                        </View>
+                    </View>
+                )}
+                <Animated.Text style={[styles.loadingMainTitle, animatedTextStyle]}>
+                  Curating {destination}...
+                </Animated.Text>
+                <Text style={styles.loadingSubtitle}>
+                  Scanning global itineraries, retrieving local picks, and finding compatible travelers.
+                </Text>
+
+              </View>
+            </View>
+        );
+    }
+
     return (
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-            keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
-        >
-            <View style={styles.content}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: T.bg.primary }}>
+            <KeyboardAvoidingView
+                style={styles.container}
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                keyboardVerticalOffset={0}
+            >
+                <View style={styles.content}>
                 {/* ── Progress & Header ── */}
                 <View style={styles.header}>
-                    <Text style={styles.progressText}>Step 2 of 2</Text>
+                    <View style={styles.headerTop}>
+                        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backBtn}>
+                            <Ionicons name="arrow-back" size={24} color={T.text.primary} />
+                        </TouchableOpacity>
+                        <Text style={styles.progressText}>Step 3 of 3</Text>
+                        <View style={{width: 24}} /> 
+                    </View>
                     <Text style={styles.title}>Plan Your Trip</Text>
                     <Text style={styles.subtitle}>Where are you going next? We'll use this to find travelers matching your path.</Text>
                 </View>
@@ -163,17 +270,16 @@ export default function TripDetailsScreen({ navigation }) {
                             <Ionicons name="search" size={20} color={T.text.tertiary} style={styles.searchIcon} />
                             <TextInput
                                 style={styles.searchInput}
-                                placeholder="Enter a city (e.g. Paris)"
+                                placeholder="Enter a city"
                                 placeholderTextColor={T.text.tertiary}
                                 value={searchQuery}
                                 onChangeText={onSearchChange}
                                 autoCorrect={false}
-                                onFocus={() => setShowSuggestions(true)}
+                                onFocus={() => {
+                                    if (searchQuery.trim().length > 0) setShowSuggestions(true);
+                                }}
                                 onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} // Delay to allow tap
                             />
-                            {isSearching && (
-                                <ActivityIndicator size="small" color={T.brand.primary} style={styles.searchLoader} />
-                            )}
                         </View>
                         
                         {/* Dropdown Suggestions */}
@@ -196,11 +302,11 @@ export default function TripDetailsScreen({ navigation }) {
                                             </TouchableOpacity>
                                         )}
                                     />
-                                ) : !isSearching ? (
+                                ) : (
                                     <View style={styles.suggestionItem}>
                                         <Text style={styles.noResultsText}>No cities found.</Text>
                                     </View>
-                                ) : null}
+                                )}
                             </View>
                         )}
                     </View>
@@ -326,10 +432,11 @@ export default function TripDetailsScreen({ navigation }) {
                     onPress={handleGetStarted}
                     disabled={!hasRequiredFields()}
                 >
-                    <Text style={styles.submitBtnText}>Get Started ✈️</Text>
+                    <Text style={styles.submitBtnText}>Get Started</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </SafeAreaView>
     );
 }
 
@@ -340,11 +447,20 @@ const styles = StyleSheet.create({
     },
     content: {
         flex: 1,
-        paddingTop: 60,
+        paddingTop: 20,
         paddingHorizontal: 24,
     },
     header: {
         marginBottom: 40,
+    },
+    headerTop: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 16,
+    },
+    backBtn: {
+        padding: 4,
     },
     progressText: {
         fontSize: 13,
@@ -522,5 +638,70 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: '700',
+    },
+    
+    // --- Loading UI Styles ---
+    loadingContainer: {
+        flex: 1,
+        backgroundColor: T.bg.primary,
+    },
+    loadingContent: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center', // Added this back as it was removed by the instruction's typo
+        paddingHorizontal: 40,
+    },
+    radarContainer: {
+        width: 120,
+        height: 120,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 40,
+    },
+    radarRing: {
+        position: 'absolute',
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        borderWidth: 2,
+        borderColor: T.brand.primaryLight,
+    },
+    globeContainer: {
+        position: 'absolute',
+        backgroundColor: T.bg.elevated,
+        borderRadius: 40,
+        width: 80,
+        height: 80,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: T.border.subtle,
+        ...T.shadow.md,
+    },
+    loadingMainTitle: {
+        fontSize: 24,
+        fontWeight: '800',
+        color: '#FFFFFF',
+        marginBottom: 12,
+        textAlign: 'center',
+    },
+    loadingSubtitle: {
+        color: T.text.secondary,
+        fontSize: 16,
+        textAlign: 'center',
+        lineHeight: 24,
+        marginBottom: 60,
+    },
+    progressTrack: {
+        width: '100%',
+        height: 6,
+        backgroundColor: T.bg.input,
+        borderRadius: 3,
+        overflow: 'hidden',
+    },
+    progressBar: {
+        height: '100%',
+        backgroundColor: T.brand.primary,
+        borderRadius: 3,
     },
 });

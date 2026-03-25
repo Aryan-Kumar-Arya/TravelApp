@@ -13,32 +13,43 @@ import { theme as T } from './src/theme/theme';
 // Auth Screens
 import LoginScreen from './src/screens/LoginScreen';
 import ProfileSetupScreen from './src/screens/ProfileSetupScreen';
+import HomeRecommendationScreen from './src/screens/HomeRecommendationScreen';
 import TripDetailsScreen from './src/screens/TripDetailsScreen';
 
 // Main Screens
-import ExploreScreen from './src/screens/ExploreScreen';
-import RecommendationsScreen from './src/screens/RecommendationsScreen';
+import TripsScreen from './src/screens/TripsScreen';
+import ExploreSwipeScreen from './src/screens/ExploreSwipeScreen'; // New Recommendation cards
+import ExploreScreen from './src/screens/ExploreScreen'; // Old ExploreScreen (Discover people)
 import MatchesScreen from './src/screens/MatchesScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
-import EditProfileScreen from './src/screens/EditProfileScreen';
+import ChatScreen from './src/screens/ChatScreen';
+
+// Profile Modal is not a screen here, it will be a component on TripsScreen
+
+// AI AI Itinerary Screens
+import GeneratingItineraryScreen from './src/screens/GeneratingItineraryScreen';
+import ItineraryDetailScreen from './src/screens/ItineraryDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 const ProfileStack = createNativeStackNavigator();
+const ExploreStack = createNativeStackNavigator();
+const AuthAppStack = createNativeStackNavigator();
 
 const TAB_ICONS = {
+  Trips: { focused: 'airplane', unfocused: 'airplane-outline' },
   Explore: { focused: 'compass', unfocused: 'compass-outline' },
   Discover: { focused: 'flame', unfocused: 'flame-outline' },
   Connections: { focused: 'heart', unfocused: 'heart-outline' },
-  Profile: { focused: 'person', unfocused: 'person-outline' },
 };
 
-function ProfileStackNavigator() {
+// Reusing ExploreStack for Trips (since trips can navigate to generated itineraries)
+function TripsStackNavigator() {
   return (
-    <ProfileStack.Navigator screenOptions={{ headerShown: false }}>
-      <ProfileStack.Screen name="ProfileMain" component={ProfileScreen} />
-      <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} />
-    </ProfileStack.Navigator>
+    <ExploreStack.Navigator screenOptions={{ headerShown: false }}>
+      <ExploreStack.Screen name="TripsMain" component={TripsScreen} />
+      <ExploreStack.Screen name="GeneratingItineraryScreen" component={GeneratingItineraryScreen} />
+      <ExploreStack.Screen name="ItineraryDetailScreen" component={ItineraryDetailScreen} />
+    </ExploreStack.Navigator>
   );
 }
 
@@ -68,10 +79,10 @@ function MainTabNavigator() {
         },
       })}
     >
-      <Tab.Screen name="Explore" component={RecommendationsScreen} />
+      <Tab.Screen name="Trips" component={TripsStackNavigator} />
+      <Tab.Screen name="Explore" component={ExploreSwipeScreen} />
       <Tab.Screen name="Discover" component={ExploreScreen} />
       <Tab.Screen name="Connections" component={MatchesScreen} />
-      <Tab.Screen name="Profile" component={ProfileStackNavigator} />
     </Tab.Navigator>
   );
 }
@@ -81,8 +92,18 @@ function AuthStackNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="ProfileSetup" component={ProfileSetupScreen} />
+      <Stack.Screen name="HomeRecommendation" component={HomeRecommendationScreen} />
       <Stack.Screen name="TripDetails" component={TripDetailsScreen} />
     </Stack.Navigator>
+  );
+}
+
+function AuthenticatedStackNavigator() {
+  return (
+    <AuthAppStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthAppStack.Screen name="MainTabs" component={MainTabNavigator} />
+      <AuthAppStack.Screen name="ChatScreen" component={ChatScreen} />
+    </AuthAppStack.Navigator>
   );
 }
 
@@ -99,7 +120,7 @@ function NavigationRoot() {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <MainTabNavigator /> : <AuthStackNavigator />}
+      {isAuthenticated ? <AuthenticatedStackNavigator /> : <AuthStackNavigator />}
     </NavigationContainer>
   );
 }

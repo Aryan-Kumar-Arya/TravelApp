@@ -3,191 +3,238 @@ import {
     View,
     Text,
     StyleSheet,
-    FlatList,
     TouchableOpacity,
+    Image,
+    ScrollView,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
+import { getProfileImageSource } from '../utils/profileImage';
 import { theme as T } from '../theme/theme';
+import { useNavigation } from '@react-navigation/native';
 
-const MatchCard = ({ match }) => {
-    const isLocal = match.isLocal;
+const RecentMessageItem = ({ msg, matchData, onPress }) => {
+    const imgSrc = getProfileImageSource(matchData || {});
+    const isUnread = msg.unread;
 
     return (
-        <TouchableOpacity
-            style={[styles.matchCard, isLocal && styles.matchCardLocal]}
-            activeOpacity={0.8}
-        >
-            <View style={[styles.matchAvatar, isLocal && styles.matchAvatarLocal]}>
-                <Text style={styles.matchAvatarEmoji}>{match.avatar}</Text>
-            </View>
-            <View style={styles.matchInfo}>
-                <View style={styles.matchNameRow}>
-                    <Text style={styles.matchName}>{match.name}</Text>
-                    {isLocal && <Text style={styles.localTag}>LOCAL 📍</Text>}
-                </View>
-                <Text style={styles.matchCity}>
-                    {isLocal ? `Lives in ${match.home_city}` : `Visiting ${match.city}`}
-                </Text>
-                {match.overlapDates && (
-                    <Text style={styles.matchDates}>📅 {match.overlapDates}</Text>
+        <TouchableOpacity style={styles.recentMsgContainer} onPress={onPress}>
+            <View style={styles.recentAvatarContainer}>
+                {imgSrc ? (
+                    <Image source={imgSrc} style={styles.recentAvatar} />
+                ) : (
+                    <View style={styles.recentAvatarPlaceholder}>
+                        <Text style={styles.recentEmoji}>{msg.avatar || matchData?.avatar || '👤'}</Text>
+                    </View>
                 )}
+                {isUnread && <View style={styles.onlineDotSmall} />}
             </View>
-            <View style={styles.chatHint}>
-                <Text style={styles.chatHintText}>💬</Text>
+            
+            <View style={styles.recentMsgContent}>
+                <View style={styles.recentMsgHeader}>
+                    <Text style={styles.recentMsgName}>{matchData?.name || msg.name}</Text>
+                    <Text style={[styles.recentMsgTime, isUnread && styles.recentMsgTimeUnread]}>{msg.time}</Text>
+                </View>
+                <Text 
+                    numberOfLines={1} 
+                    style={[styles.recentMsgText, isUnread && styles.recentMsgTextUnread]}
+                >
+                    {msg.text}
+                </Text>
             </View>
         </TouchableOpacity>
     );
 };
 
-const MatchesScreen = () => {
+export default function MatchesScreen() {
     const { matches } = useAuth();
+    const navigation = useNavigation();
+
+    // Map real matches to messages for display
+    const recentMessages = matches.slice().reverse().map((match, index) => {
+        return { 
+            id: match.id || `m${index}`, 
+            name: match.name, 
+            avatar: match.avatar || '👤', 
+            text: index === 0 ? 'Say hello!' : 'Hey there, how are you?', 
+            time: index === 0 ? 'Just now' : 'Yesterday', 
+            unread: index === 0, 
+            matchData: match 
+        };
+    });
+
+    const handleChatPress = (matchData) => {
+        navigation.navigate('ChatScreen', { match: matchData });
+    };
 
     return (
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>Your Matches</Text>
-                <Text style={styles.headerSubtitle}>
-                    {matches.length > 0
-                        ? `${matches.length} match${matches.length > 1 ? 'es' : ''} so far`
-                        : 'Start swiping to find your travel buddies!'}
-                </Text>
+                <Ionicons name="menu" size={28} color="#FFF" style={styles.menuIcon} />
+                <Text style={styles.headerTitle}>AVARA</Text>
+                <Ionicons name="search" size={24} color="#FFF" style={styles.searchIcon} />
             </View>
 
-            {matches.length > 0 ? (
-                <FlatList
-                    data={matches}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => <MatchCard match={item} />}
-                    contentContainerStyle={styles.list}
-                    showsVerticalScrollIndicator={false}
-                />
-            ) : (
-                <View style={styles.emptyState}>
-                    <Text style={styles.emptyEmoji}>🤝</Text>
-                    <Text style={styles.emptyTitle}>No matches yet</Text>
-                    <Text style={styles.emptySubtitle}>
-                        When you and another traveler both swipe right, you'll see them here.
-                        Head to the Discover tab to get started!
-                    </Text>
+            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+                {/* RECENT MESSAGES SECTION */}
+                <View style={[styles.sectionHeader]}>
+                    <Text style={styles.sectionTitle}>RECENT MATCHES & MESSAGES</Text>
                 </View>
-            )}
+
+                {recentMessages.length > 0 ? (
+                    <View style={styles.recentMessagesList}>
+                        {recentMessages.map((msg) => (
+                            <RecentMessageItem 
+                                key={msg.id} 
+                                msg={msg} 
+                                matchData={msg.matchData}
+                                onPress={() => handleChatPress(msg.matchData || msg)} 
+                            />
+                        ))}
+                    </View>
+                ) : (
+                    <View style={styles.emptyState}>
+                        <Text style={styles.emptyEmoji}>🤝</Text>
+                        <Text style={styles.emptyTitle}>No matches yet</Text>
+                        <Text style={styles.emptySubtitle}>
+                            When you swipe right on the Discover screen, they'll appear here.
+                        </Text>
+                    </View>
+                )}
+                
+            </ScrollView>
         </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: T.bg.primary,
+        backgroundColor: '#111827', // Darker background to match image exactly
     },
+    // Top App Bar
     header: {
-        paddingTop: 60,
-        paddingHorizontal: 24,
-        paddingBottom: 16,
-        backgroundColor: T.bg.secondary,
-        borderBottomWidth: 1,
-        borderBottomColor: T.border.subtle,
-    },
-    headerTitle: {
-        fontSize: 28,
-        fontWeight: '800',
-        color: T.text.primary,
-        marginBottom: 4,
-    },
-    headerSubtitle: {
-        fontSize: 15,
-        color: T.text.secondary,
-        fontWeight: '500',
-    },
-
-    // List
-    list: {
-        paddingHorizontal: 16,
-        paddingTop: 16,
-        paddingBottom: 30,
-    },
-
-    // Match card
-    matchCard: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: T.bg.card,
-        borderRadius: T.radius.lg,
-        padding: 16,
-        marginBottom: 12,
-        borderWidth: 1,
-        borderColor: T.border.subtle,
+        justifyContent: 'space-between',
+        paddingTop: 60,
+        paddingHorizontal: 20,
+        paddingBottom: 16,
+        backgroundColor: '#111827',
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255,255,255,0.05)',
     },
-    matchCardLocal: {
-        borderColor: T.brand.gold,
+    menuIcon: {
+        width: 32,
     },
-    matchAvatar: {
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: '900',
+        color: '#FFFFFF',
+        letterSpacing: 1,
+    },
+    searchIcon: {
+        width: 32,
+        textAlign: 'right',
+    },
+    
+    scrollContent: {
+        paddingVertical: 24,
+    },
+
+    // Section Headers
+    sectionHeader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        marginBottom: 16,
+    },
+    sectionTitle: {
+        fontSize: 12,
+        fontWeight: '800',
+        color: '#FFFFFF',
+        letterSpacing: 1.5,
+    },
+
+    // Recent Messages
+    recentMessagesList: {
+        paddingHorizontal: 20,
+    },
+    recentMsgContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(255,255,255,0.05)',
+    },
+    recentAvatarContainer: {
+        marginRight: 16,
+    },
+    recentAvatar: {
         width: 56,
         height: 56,
         borderRadius: 28,
-        backgroundColor: T.brand.primaryMuted,
+    },
+    recentAvatarPlaceholder: {
+        width: 56,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: '#FED7AA',
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight: 14,
     },
-    matchAvatarLocal: {
-        backgroundColor: T.brand.goldMuted,
+    recentEmoji: {
+        fontSize: 24,
     },
-    matchAvatarEmoji: {
-        fontSize: 28,
+    onlineDotSmall: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: 14,
+        height: 14,
+        borderRadius: 7,
+        backgroundColor: '#22C55E',
+        borderWidth: 2,
+        borderColor: '#111827',
     },
-    matchInfo: {
+    recentMsgContent: {
         flex: 1,
+        justifyContent: 'center',
     },
-    matchNameRow: {
+    recentMsgHeader: {
         flexDirection: 'row',
-        alignItems: 'center',
-        gap: 8,
-        marginBottom: 2,
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        marginBottom: 6,
     },
-    matchName: {
-        fontSize: 17,
+    recentMsgName: {
+        fontSize: 16,
         fontWeight: '700',
-        color: T.text.primary,
+        color: '#FFFFFF',
     },
-    localTag: {
-        fontSize: 10,
-        fontWeight: '800',
-        color: T.brand.gold,
-        backgroundColor: T.brand.goldMuted,
-        paddingHorizontal: 6,
-        paddingVertical: 2,
-        borderRadius: 6,
-        overflow: 'hidden',
-    },
-    matchCity: {
-        fontSize: 13,
-        color: T.text.secondary,
+    recentMsgTime: {
+        fontSize: 11,
+        color: '#6B7280',
         fontWeight: '500',
-        marginBottom: 2,
     },
-    matchDates: {
-        fontSize: 12,
-        color: T.brand.primaryLight,
+    recentMsgTimeUnread: {
+        color: '#FFFFFF',
+    },
+    recentMsgText: {
+        fontSize: 14,
+        color: '#9CA3AF',
+        fontWeight: '400',
+    },
+    recentMsgTextUnread: {
+        color: T.brand.primaryLight, // Cyan tint for unread
         fontWeight: '600',
     },
-    chatHint: {
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        backgroundColor: T.bg.input,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    chatHintText: {
-        fontSize: 20,
-    },
-
+    
     // Empty state
     emptyState: {
-        flex: 1,
-        justifyContent: 'center',
+        paddingTop: 60,
         alignItems: 'center',
         paddingHorizontal: 40,
     },
@@ -208,5 +255,3 @@ const styles = StyleSheet.create({
         lineHeight: 22,
     },
 });
-
-export default MatchesScreen;

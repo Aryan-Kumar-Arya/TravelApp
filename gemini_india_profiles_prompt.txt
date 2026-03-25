@@ -1,0 +1,579 @@
+================================================================
+MASTER PROMPT FOR GEMINI PRO — INDIAN TRAVEL APP PROFILE PORTRAITS
+================================================================
+
+You are helping me generate photorealistic profile portrait images for a travel app demo. I need portraits for 132 Indian user profiles. You will generate ONE image at a time, show it to me, and wait for my approval before moving to the next profile.
+
+================================================================
+STYLE SPECIFICATION (apply to EVERY image)
+================================================================
+
+- Format: Upper body headshot, square crop (1:1 aspect ratio), mobile app avatar format
+- Background: Dark teal studio background (solid, not gradient)
+- Lighting: Soft cinematic lighting from the front-left, creating gentle shadows
+- Focus: Sharp focus on face, shallow depth of field
+- Resolution: High resolution, professional portrait photography quality
+- Aesthetic: Photorealistic — must look like a real person, NOT illustrated or AI-generated
+- Expression: Natural, warm, approachable — like a profile photo someone would use on a social app
+- Clothing: Casual, age-appropriate — varies by persona (see profile details)
+- Restrictions: Do NOT add text, watermarks, logos, overlays, or any graphic elements
+- Each person should look UNIQUE — avoid similar-looking faces across profiles
+
+================================================================
+REGIONAL APPEARANCE GUIDE (use based on Home City)
+================================================================
+
+Use these appearance cues to ensure authentic regional diversity:
+
+KERALA (Varkala, Kochi):
+  - Warm brown skin, dark almond-shaped eyes, dark hair
+  - Keralite features
+
+SOUTH INDIA (Puducherry, Chennai, Mysore, Ooty, Coorg, Bangalore, Hampi, Gokarna):
+  - Warm dark brown skin, dark expressive eyes, dark hair
+  - South Indian features
+
+RAJASTHAN (Udaipur, Jaipur, Jodhpur, Pushkar):
+  - Warm wheatish/golden-brown skin, dark eyes, dark hair
+  - Rajasthani features, may wear colorful accessories or ethnic earrings
+
+NORTHEAST INDIA (Shillong):
+  - Fair wheatish skin, slightly East Asian features, dark hair
+  - Northeast Indian/Khasi features
+
+NORTH INDIA (Delhi, Varanasi, Amritsar):
+  - Medium wheatish skin, dark expressive eyes, dark hair
+  - North Indian features, may have kajal-lined eyes (women)
+
+HIMACHAL (Old Manali, Kasol, Bir Billing, Dharamshala, McLeod Ganj):
+  - Fair skin, sharp mountain-town features, dark hair
+  - May have rosy cheeks from mountain air, outdoorsy look
+
+GOA:
+  - Warm tan skin, expressive eyes, dark wavy hair
+  - Coastal Goan features, relaxed bohemian vibe
+
+BENGAL (Kolkata, Darjeeling):
+  - Medium wheatish to fair skin, large expressive eyes, dark hair
+  - Bengali features
+
+LADAKH (Leh):
+  - Fair skin, Tibetan/Ladakhi features with East Asian influence, dark hair
+  - High-altitude rugged look
+
+MAHARASHTRA (Mumbai):
+  - Warm brown to wheatish skin, dark expressive eyes, dark hair
+  - Maharashtrian features
+
+GUJARAT (Ahmedabad):
+  - Wheatish skin, warm dark eyes, dark hair
+  - Gujarati features
+
+ANDAMAN ISLANDS:
+  - Warm brown skin, bright curious eyes, dark hair
+  - Coastal island vibe
+
+UTTARAKHAND (Rishikesh):
+  - Fair to wheatish skin, calm expressive eyes, dark hair
+  - Pahadi features
+
+TELANGANA (Hyderabad):
+  - Warm wheatish to brown skin, dark eyes, dark hair
+  - Deccani features
+
+================================================================
+GENDER MAPPING (by name)
+================================================================
+
+Female names: Diya, Neha, Pooja, Sneha
+Male names: Vikram, Rohan, Rahul, Aryan
+
+================================================================
+PERSONALITY-TO-STYLE MAPPING
+================================================================
+
+Use the profile's interests to inform clothing and expression:
+
+- Yoga/Temples/History → serene expression, ethnic or linen clothing
+- Nightlife/Jazz/Live Music → confident/stylish expression, trendy casual wear
+- Hiking/Backpacking/Surfing → energetic expression, outdoor/athletic wear
+- Photography/Art Galleries → creative/thoughtful expression, artistic casual wear
+- Coffee/Street Food → warm approachable expression, comfortable casual wear
+- Architecture → intellectual/composed expression, smart casual wear
+
+================================================================
+WORKFLOW — FOLLOW THIS EXACTLY
+================================================================
+
+1. Start with Profile [1/132]
+2. Read the profile data below
+3. Compose a detailed image generation prompt using:
+   - The style spec above
+   - Regional appearance from the guide
+   - Gender from the name
+   - Personality cues from interests
+   - Age-appropriate styling
+4. Generate the image
+5. Display the image and print:
+   "Profile [N/132]: {Name}, {Age}, {Home City} — Save as: {ID}.png"
+   "✅ Approved? (yes / no / redo with notes)"
+6. STOP and wait for my response
+7. If "yes" → move to next profile
+8. If "no" or "redo" → regenerate with my feedback
+9. Repeat until all 132 are done
+
+================================================================
+IMPORTANT NOTES
+================================================================
+
+- Same names appear multiple times (e.g., multiple "Diya" profiles) — each must look like a DIFFERENT person with a DIFFERENT face. Use age, region, and interests to differentiate.
+- Local profiles (lp-*) should feel grounded and confident — like someone who knows their city
+- Traveler profiles (tp-*) should feel adventurous and curious — like someone exploring new places
+- Maintain consistent quality and style across all 132 images
+
+================================================================
+PROFILE DATA — ALL 132 PROFILES
+================================================================
+
+[1/132] ID: tp-chiang-mai-1 | Name: Diya | Age: 25 | Gender: F | Home: Varkala, India | Region: Kerala | Interests: Night Markets, Street Food, Temples | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[2/132] ID: tp-kuala-lumpur-2 | Name: Vikram | Age: 22 | Gender: M | Home: Shillong, India | Region: Northeast India | Interests: Hiking, Photography, Backpacking | Type: Traveler | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[3/132] ID: tp-penang-2 | Name: Rohan | Age: 36 | Gender: M | Home: Shillong, India | Region: Northeast India | Interests: Jazz, Backpacking, Nightlife | Type: Traveler | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[4/132] ID: tp-ubud-1 | Name: Diya | Age: 22 | Gender: F | Home: Shillong, India | Region: Northeast India | Interests: Temples, Jazz, Hiking | Type: Traveler | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[5/132] ID: tp-ubud-2 | Name: Sneha | Age: 33 | Gender: F | Home: Kochi, India | Region: Kerala | Interests: Yoga, History, Temples | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[6/132] ID: tp-ho-chi-minh-1 | Name: Aryan | Age: 23 | Gender: M | Home: Leh, India | Region: Ladakh | Interests: Art Galleries, Coffee, Jazz | Type: Traveler | Appearance: fair skin, Tibetan/Ladakhi features with East Asian influence, dark hair, high-altitude rugged look
+[7/132] ID: tp-ho-chi-minh-2 | Name: Diya | Age: 22 | Gender: F | Home: Varanasi, India | Region: North India | Interests: Temples, Art Galleries, Architecture | Type: Traveler | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[8/132] ID: tp-da-nang-1 | Name: Sneha | Age: 23 | Gender: F | Home: Delhi, India | Region: North India | Interests: Street Food, Coffee, Temples | Type: Traveler | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[9/132] ID: tp-da-nang-2 | Name: Sneha | Age: 31 | Gender: F | Home: Darjeeling, India | Region: Bengal | Interests: Jazz, Hiking, History | Type: Traveler | Appearance: medium wheatish to fair skin, large expressive eyes, dark hair, Bengali features
+[10/132] ID: tp-taipei-2 | Name: Neha | Age: 28 | Gender: F | Home: Varanasi, India | Region: North India | Interests: Architecture, Night Markets, Nightlife | Type: Traveler | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[11/132] ID: tp-tokyo-2 | Name: Vikram | Age: 23 | Gender: M | Home: Hyderabad, India | Region: Telangana | Interests: Photography, Coffee, Art Galleries | Type: Traveler | Appearance: warm wheatish to brown skin, dark eyes, dark hair, Deccani features
+[12/132] ID: tp-kyoto-2 | Name: Rohan | Age: 29 | Gender: M | Home: Ooty, India | Region: South India | Interests: Nightlife, History, Night Markets | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[13/132] ID: tp-seoul-2 | Name: Rahul | Age: 28 | Gender: M | Home: Bangalore, India | Region: South India | Interests: Hiking, Backpacking, Architecture | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[14/132] ID: tp-hong-kong-1 | Name: Pooja | Age: 22 | Gender: F | Home: Udaipur, India | Region: Rajasthan | Interests: Hiking, Art Galleries, Architecture | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[15/132] ID: tp-kathmandu-2 | Name: Diya | Age: 38 | Gender: F | Home: Bir Billing, India | Region: Himachal | Interests: History, Street Food, Night Markets | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[16/132] ID: tp-dubai-2 | Name: Rahul | Age: 35 | Gender: M | Home: Puducherry, India | Region: South India | Interests: Backpacking, Photography, Temples | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[17/132] ID: tp-tel-aviv-1 | Name: Diya | Age: 38 | Gender: F | Home: Dharamshala, India | Region: Himachal | Interests: Hiking, Street Food, Live Music | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[18/132] ID: tp-lisbon-2 | Name: Vikram | Age: 34 | Gender: M | Home: Gokarna, India | Region: South India | Interests: Street Food, Backpacking, Temples | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[19/132] ID: tp-dublin-1 | Name: Pooja | Age: 27 | Gender: F | Home: Kochi, India | Region: Kerala | Interests: Surfing, Architecture, Jazz | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[20/132] ID: tp-edinburgh-2 | Name: Vikram | Age: 26 | Gender: M | Home: Andaman Islands, India | Region: Andaman | Interests: Temples, Photography, Surfing | Type: Traveler | Appearance: warm brown skin, bright curious eyes, dark hair, coastal island vibe
+[21/132] ID: tp-copenhagen-2 | Name: Vikram | Age: 28 | Gender: M | Home: Old Manali, India | Region: Himachal | Interests: Nightlife, Night Markets, Live Music | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[22/132] ID: tp-stockholm-1 | Name: Pooja | Age: 25 | Gender: F | Home: Mysore, India | Region: South India | Interests: Jazz, Coffee, Temples | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[23/132] ID: tp-tallinn-1 | Name: Diya | Age: 26 | Gender: F | Home: Varkala, India | Region: Kerala | Interests: Yoga, History, Street Food | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[24/132] ID: tp-budapest-1 | Name: Neha | Age: 36 | Gender: F | Home: Chennai, India | Region: South India | Interests: Art Galleries, Hiking, Yoga | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[25/132] ID: tp-vienna-2 | Name: Vikram | Age: 29 | Gender: M | Home: Pushkar, India | Region: Rajasthan | Interests: Hiking, Temples, Nightlife | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[26/132] ID: tp-valencia-2 | Name: Rohan | Age: 33 | Gender: M | Home: Hampi, India | Region: South India | Interests: Art Galleries, Nightlife, History | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[27/132] ID: tp-seville-1 | Name: Neha | Age: 32 | Gender: F | Home: Varkala, India | Region: Kerala | Interests: Surfing, Night Markets, Hiking | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[28/132] ID: tp-rome-1 | Name: Rahul | Age: 22 | Gender: M | Home: Varkala, India | Region: Kerala | Interests: Photography, History, Street Food | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[29/132] ID: tp-hvar-1 | Name: Neha | Age: 36 | Gender: F | Home: Pushkar, India | Region: Rajasthan | Interests: History, Coffee, Night Markets | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[30/132] ID: tp-hvar-2 | Name: Rahul | Age: 28 | Gender: M | Home: Mumbai, India | Region: Maharashtra | Interests: Yoga, Art Galleries, Architecture | Type: Traveler | Appearance: warm brown to wheatish skin, dark expressive eyes, dark hair, Maharashtrian features
+[31/132] ID: tp-split-2 | Name: Rahul | Age: 28 | Gender: M | Home: Gokarna, India | Region: South India | Interests: Nightlife, Yoga, Art Galleries | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[32/132] ID: tp-tbilisi-1 | Name: Sneha | Age: 22 | Gender: F | Home: Chennai, India | Region: South India | Interests: Art Galleries, Photography, Nightlife | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[33/132] ID: tp-tbilisi-2 | Name: Neha | Age: 33 | Gender: F | Home: Bir Billing, India | Region: Himachal | Interests: Jazz, Night Markets, Backpacking | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[34/132] ID: tp-istanbul-2 | Name: Aryan | Age: 27 | Gender: M | Home: McLeod Ganj, India | Region: Himachal | Interests: Art Galleries, Yoga, Coffee | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[35/132] ID: tp-los-angeles-2 | Name: Rahul | Age: 35 | Gender: M | Home: Jaipur, India | Region: Rajasthan | Interests: Nightlife, Street Food, Photography | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[36/132] ID: tp-toronto-2 | Name: Diya | Age: 34 | Gender: F | Home: Varkala, India | Region: Kerala | Interests: Temples, Nightlife, Coffee | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[37/132] ID: tp-mexico-city-2 | Name: Rahul | Age: 23 | Gender: M | Home: Varanasi, India | Region: North India | Interests: Photography, Surfing, Street Food | Type: Traveler | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[38/132] ID: tp-playa-del-carmen-1 | Name: Sneha | Age: 28 | Gender: F | Home: McLeod Ganj, India | Region: Himachal | Interests: Backpacking, Jazz, Nightlife | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[39/132] ID: tp-tulum-2 | Name: Neha | Age: 37 | Gender: F | Home: Jodhpur, India | Region: Rajasthan | Interests: Jazz, Architecture, Photography | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[40/132] ID: tp-medellin-1 | Name: Diya | Age: 23 | Gender: F | Home: Dharamshala, India | Region: Himachal | Interests: Nightlife, Coffee, History | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[41/132] ID: tp-cartagena-1 | Name: Vikram | Age: 37 | Gender: M | Home: Mumbai, India | Region: Maharashtra | Interests: Backpacking, Hiking, Temples | Type: Traveler | Appearance: warm brown to wheatish skin, dark expressive eyes, dark hair, Maharashtrian features
+[42/132] ID: tp-buenos-aires-2 | Name: Pooja | Age: 31 | Gender: F | Home: Goa, India | Region: Goa | Interests: Art Galleries, Backpacking, Night Markets | Type: Traveler | Appearance: warm tan skin, expressive eyes, dark wavy hair, coastal Goan features
+[43/132] ID: tp-cusco-1 | Name: Rahul | Age: 35 | Gender: M | Home: Kolkata, India | Region: Bengal | Interests: Jazz, Temples, Architecture | Type: Traveler | Appearance: medium wheatish to fair skin, large expressive eyes, dark hair, Bengali features
+[44/132] ID: tp-rio-de-janeiro-2 | Name: Rahul | Age: 27 | Gender: M | Home: Old Manali, India | Region: Himachal | Interests: Temples, Surfing, Nightlife | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[45/132] ID: tp-cape-town-1 | Name: Diya | Age: 38 | Gender: F | Home: Rishikesh, India | Region: Uttarakhand | Interests: Temples, Coffee, Art Galleries | Type: Traveler | Appearance: fair to wheatish skin, calm expressive eyes, dark hair, Pahadi features
+[46/132] ID: tp-nairobi-2 | Name: Sneha | Age: 33 | Gender: F | Home: Ahmedabad, India | Region: Gujarat | Interests: Temples, Nightlife, Yoga | Type: Traveler | Appearance: wheatish skin, warm dark eyes, dark hair, Gujarati features
+[47/132] ID: tp-zanzibar-1 | Name: Diya | Age: 27 | Gender: F | Home: Coorg, India | Region: South India | Interests: Hiking, Backpacking, Live Music | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[48/132] ID: tp-melbourne-1 | Name: Neha | Age: 34 | Gender: F | Home: Ooty, India | Region: South India | Interests: Architecture, Temples, History | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[49/132] ID: tp-melbourne-2 | Name: Rahul | Age: 35 | Gender: M | Home: Rishikesh, India | Region: Uttarakhand | Interests: Architecture, Backpacking, Nightlife | Type: Traveler | Appearance: fair to wheatish skin, calm expressive eyes, dark hair, Pahadi features
+[50/132] ID: lp-delhi-1 | Name: Sneha | Age: 26 | Gender: F | Home: Delhi, India | Region: North India | Interests: Nightlife, Street Food, Coffee | Type: Local | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[51/132] ID: lp-delhi-2 | Name: Diya | Age: 22 | Gender: F | Home: Delhi, India | Region: North India | Interests: History, Nightlife, Architecture | Type: Local | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[52/132] ID: tp-delhi-1 | Name: Neha | Age: 28 | Gender: F | Home: Mysore, India | Region: South India | Interests: Temples, Night Markets, Art Galleries | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[53/132] ID: tp-delhi-2 | Name: Rohan | Age: 35 | Gender: M | Home: Shillong, India | Region: Northeast India | Interests: Yoga, Architecture, Nightlife | Type: Traveler | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[54/132] ID: lp-leh-1 | Name: Rohan | Age: 29 | Gender: M | Home: Leh, India | Region: Ladakh | Interests: Night Markets, Surfing, Backpacking | Type: Local | Appearance: fair skin, Tibetan/Ladakhi features with East Asian influence, dark hair, high-altitude rugged look
+[55/132] ID: lp-leh-2 | Name: Rohan | Age: 34 | Gender: M | Home: Leh, India | Region: Ladakh | Interests: Photography, Backpacking, Architecture | Type: Local | Appearance: fair skin, Tibetan/Ladakhi features with East Asian influence, dark hair, high-altitude rugged look
+[56/132] ID: tp-leh-1 | Name: Rohan | Age: 34 | Gender: M | Home: Udaipur, India | Region: Rajasthan | Interests: History, Coffee, Hiking | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[57/132] ID: lp-old-manali-1 | Name: Diya | Age: 34 | Gender: F | Home: Old Manali, India | Region: Himachal | Interests: Backpacking, Night Markets, Live Music | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[58/132] ID: lp-old-manali-2 | Name: Aryan | Age: 36 | Gender: M | Home: Old Manali, India | Region: Himachal | Interests: Jazz, Yoga, Hiking | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[59/132] ID: tp-old-manali-2 | Name: Vikram | Age: 23 | Gender: M | Home: Shillong, India | Region: Northeast India | Interests: Surfing, Street Food, Hiking | Type: Traveler | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[60/132] ID: lp-kasol-1 | Name: Rahul | Age: 35 | Gender: M | Home: Kasol, India | Region: Himachal | Interests: Surfing, Coffee, Art Galleries | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[61/132] ID: lp-kasol-2 | Name: Rahul | Age: 28 | Gender: M | Home: Kasol, India | Region: Himachal | Interests: Street Food, Nightlife, Coffee | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[62/132] ID: tp-kasol-2 | Name: Rohan | Age: 37 | Gender: M | Home: Rishikesh, India | Region: Uttarakhand | Interests: Street Food, Jazz, Night Markets | Type: Traveler | Appearance: fair to wheatish skin, calm expressive eyes, dark hair, Pahadi features
+[63/132] ID: lp-bir-billing-1 | Name: Rahul | Age: 38 | Gender: M | Home: Bir Billing, India | Region: Himachal | Interests: Temples, Yoga, Photography | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[64/132] ID: lp-bir-billing-2 | Name: Rahul | Age: 29 | Gender: M | Home: Bir Billing, India | Region: Himachal | Interests: Temples, Photography, Night Markets | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[65/132] ID: tp-bir-billing-1 | Name: Rahul | Age: 38 | Gender: M | Home: Ooty, India | Region: South India | Interests: Photography, Nightlife, Temples | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[66/132] ID: tp-bir-billing-2 | Name: Neha | Age: 34 | Gender: F | Home: Shillong, India | Region: Northeast India | Interests: Live Music, Art Galleries, Street Food | Type: Traveler | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[67/132] ID: lp-dharamshala-1 | Name: Rohan | Age: 23 | Gender: M | Home: Dharamshala, India | Region: Himachal | Interests: Live Music, Jazz, Art Galleries | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[68/132] ID: lp-dharamshala-2 | Name: Pooja | Age: 31 | Gender: F | Home: Dharamshala, India | Region: Himachal | Interests: Backpacking, Nightlife, Jazz | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[69/132] ID: lp-mcleod-ganj-1 | Name: Rohan | Age: 28 | Gender: M | Home: McLeod Ganj, India | Region: Himachal | Interests: Architecture, Art Galleries, History | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[70/132] ID: lp-mcleod-ganj-2 | Name: Diya | Age: 26 | Gender: F | Home: McLeod Ganj, India | Region: Himachal | Interests: Art Galleries, Night Markets, Backpacking | Type: Local | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[71/132] ID: tp-mcleod-ganj-2 | Name: Diya | Age: 31 | Gender: F | Home: Goa, India | Region: Goa | Interests: Night Markets, Coffee, Hiking | Type: Traveler | Appearance: warm tan skin, expressive eyes, dark wavy hair, coastal Goan features
+[72/132] ID: lp-rishikesh-1 | Name: Neha | Age: 33 | Gender: F | Home: Rishikesh, India | Region: Uttarakhand | Interests: Jazz, Night Markets, Backpacking | Type: Local | Appearance: fair to wheatish skin, calm expressive eyes, dark hair, Pahadi features
+[73/132] ID: lp-rishikesh-2 | Name: Rohan | Age: 32 | Gender: M | Home: Rishikesh, India | Region: Uttarakhand | Interests: Coffee, Nightlife, Live Music | Type: Local | Appearance: fair to wheatish skin, calm expressive eyes, dark hair, Pahadi features
+[74/132] ID: tp-rishikesh-1 | Name: Aryan | Age: 33 | Gender: M | Home: Varkala, India | Region: Kerala | Interests: Street Food, Night Markets, Coffee | Type: Traveler | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[75/132] ID: lp-amritsar-1 | Name: Pooja | Age: 34 | Gender: F | Home: Amritsar, India | Region: North India | Interests: Photography, Backpacking, Night Markets | Type: Local | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[76/132] ID: lp-amritsar-2 | Name: Diya | Age: 31 | Gender: F | Home: Amritsar, India | Region: North India | Interests: History, Architecture, Hiking | Type: Local | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[77/132] ID: lp-varanasi-1 | Name: Diya | Age: 25 | Gender: F | Home: Varanasi, India | Region: North India | Interests: Coffee, Surfing, Street Food | Type: Local | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[78/132] ID: lp-varanasi-2 | Name: Aryan | Age: 38 | Gender: M | Home: Varanasi, India | Region: North India | Interests: Nightlife, Hiking, Surfing | Type: Local | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[79/132] ID: lp-shillong-1 | Name: Neha | Age: 38 | Gender: F | Home: Shillong, India | Region: Northeast India | Interests: History, Architecture, Nightlife | Type: Local | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[80/132] ID: lp-shillong-2 | Name: Sneha | Age: 36 | Gender: F | Home: Shillong, India | Region: Northeast India | Interests: Yoga, History, Hiking | Type: Local | Appearance: fair wheatish skin, slightly East Asian features, dark hair, Northeast Indian features
+[81/132] ID: tp-shillong-2 | Name: Rohan | Age: 34 | Gender: M | Home: Dharamshala, India | Region: Himachal | Interests: Hiking, Live Music, Jazz | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[82/132] ID: lp-darjeeling-1 | Name: Sneha | Age: 29 | Gender: F | Home: Darjeeling, India | Region: Bengal | Interests: Coffee, Live Music, Architecture | Type: Local | Appearance: medium wheatish to fair skin, large expressive eyes, dark hair, Bengali features
+[83/132] ID: lp-darjeeling-2 | Name: Sneha | Age: 22 | Gender: F | Home: Darjeeling, India | Region: Bengal | Interests: Street Food, Temples, History | Type: Local | Appearance: medium wheatish to fair skin, large expressive eyes, dark hair, Bengali features
+[84/132] ID: lp-jaipur-1 | Name: Pooja | Age: 30 | Gender: F | Home: Jaipur, India | Region: Rajasthan | Interests: Live Music, Photography, History | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[85/132] ID: lp-jaipur-2 | Name: Aryan | Age: 37 | Gender: M | Home: Jaipur, India | Region: Rajasthan | Interests: Art Galleries, Photography, Street Food | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[86/132] ID: lp-udaipur-1 | Name: Diya | Age: 30 | Gender: F | Home: Udaipur, India | Region: Rajasthan | Interests: Hiking, Street Food, Night Markets | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[87/132] ID: lp-udaipur-2 | Name: Neha | Age: 29 | Gender: F | Home: Udaipur, India | Region: Rajasthan | Interests: Nightlife, Surfing, Backpacking | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[88/132] ID: lp-jodhpur-1 | Name: Pooja | Age: 31 | Gender: F | Home: Jodhpur, India | Region: Rajasthan | Interests: Surfing, Temples, Live Music | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[89/132] ID: lp-jodhpur-2 | Name: Aryan | Age: 28 | Gender: M | Home: Jodhpur, India | Region: Rajasthan | Interests: Temples, Yoga, Street Food | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[90/132] ID: tp-jodhpur-1 | Name: Sneha | Age: 23 | Gender: F | Home: Kasol, India | Region: Himachal | Interests: Surfing, Architecture, Coffee | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[91/132] ID: lp-pushkar-1 | Name: Rahul | Age: 29 | Gender: M | Home: Pushkar, India | Region: Rajasthan | Interests: Hiking, Night Markets, Jazz | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[92/132] ID: lp-pushkar-2 | Name: Aryan | Age: 36 | Gender: M | Home: Pushkar, India | Region: Rajasthan | Interests: History, Jazz, Coffee | Type: Local | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[93/132] ID: tp-pushkar-2 | Name: Sneha | Age: 37 | Gender: F | Home: Ahmedabad, India | Region: Gujarat | Interests: Surfing, Yoga, History | Type: Traveler | Appearance: wheatish skin, warm dark eyes, dark hair, Gujarati features
+[94/132] ID: lp-mumbai-1 | Name: Diya | Age: 33 | Gender: F | Home: Mumbai, India | Region: Maharashtra | Interests: History, Temples, Night Markets | Type: Local | Appearance: warm brown to wheatish skin, dark expressive eyes, dark hair, Maharashtrian features
+[95/132] ID: lp-mumbai-2 | Name: Aryan | Age: 28 | Gender: M | Home: Mumbai, India | Region: Maharashtra | Interests: Surfing, Yoga, Photography | Type: Local | Appearance: warm brown to wheatish skin, dark expressive eyes, dark hair, Maharashtrian features
+[96/132] ID: lp-ahmedabad-1 | Name: Neha | Age: 25 | Gender: F | Home: Ahmedabad, India | Region: Gujarat | Interests: Photography, Live Music, Art Galleries | Type: Local | Appearance: wheatish skin, warm dark eyes, dark hair, Gujarati features
+[97/132] ID: lp-ahmedabad-2 | Name: Rohan | Age: 28 | Gender: M | Home: Ahmedabad, India | Region: Gujarat | Interests: Hiking, Temples, Live Music | Type: Local | Appearance: wheatish skin, warm dark eyes, dark hair, Gujarati features
+[98/132] ID: lp-goa-1 | Name: Rahul | Age: 36 | Gender: M | Home: Goa, India | Region: Goa | Interests: Art Galleries, Live Music, Hiking | Type: Local | Appearance: warm tan skin, expressive eyes, dark wavy hair, coastal Goan features
+[99/132] ID: lp-goa-2 | Name: Sneha | Age: 31 | Gender: F | Home: Goa, India | Region: Goa | Interests: Photography, Coffee, Nightlife | Type: Local | Appearance: warm tan skin, expressive eyes, dark wavy hair, coastal Goan features
+[100/132] ID: tp-goa-1 | Name: Rahul | Age: 24 | Gender: M | Home: Ahmedabad, India | Region: Gujarat | Interests: History, Temples, Street Food | Type: Traveler | Appearance: wheatish skin, warm dark eyes, dark hair, Gujarati features
+[101/132] ID: lp-kolkata-1 | Name: Pooja | Age: 28 | Gender: F | Home: Kolkata, India | Region: Bengal | Interests: Photography, Art Galleries, Street Food | Type: Local | Appearance: medium wheatish to fair skin, large expressive eyes, dark hair, Bengali features
+[102/132] ID: lp-kolkata-2 | Name: Diya | Age: 23 | Gender: F | Home: Kolkata, India | Region: Bengal | Interests: Live Music, Street Food, Coffee | Type: Local | Appearance: medium wheatish to fair skin, large expressive eyes, dark hair, Bengali features
+[103/132] ID: tp-kolkata-1 | Name: Pooja | Age: 29 | Gender: F | Home: Jaipur, India | Region: Rajasthan | Interests: Temples, Surfing, Architecture | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[104/132] ID: lp-hyderabad-1 | Name: Rahul | Age: 22 | Gender: M | Home: Hyderabad, India | Region: Telangana | Interests: Yoga, Photography, Art Galleries | Type: Local | Appearance: warm wheatish to brown skin, dark eyes, dark hair, Deccani features
+[105/132] ID: lp-hyderabad-2 | Name: Pooja | Age: 24 | Gender: F | Home: Hyderabad, India | Region: Telangana | Interests: Backpacking, Street Food, Surfing | Type: Local | Appearance: warm wheatish to brown skin, dark eyes, dark hair, Deccani features
+[106/132] ID: tp-hyderabad-1 | Name: Diya | Age: 30 | Gender: F | Home: Delhi, India | Region: North India | Interests: Street Food, Night Markets, History | Type: Traveler | Appearance: medium wheatish skin, dark expressive eyes, dark hair, North Indian features
+[107/132] ID: lp-chennai-1 | Name: Diya | Age: 38 | Gender: F | Home: Chennai, India | Region: South India | Interests: Temples, Street Food, Backpacking | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[108/132] ID: lp-chennai-2 | Name: Rohan | Age: 26 | Gender: M | Home: Chennai, India | Region: South India | Interests: Nightlife, Backpacking, Jazz | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[109/132] ID: lp-bangalore-1 | Name: Rahul | Age: 36 | Gender: M | Home: Bangalore, India | Region: South India | Interests: Art Galleries, Photography, Backpacking | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[110/132] ID: lp-bangalore-2 | Name: Vikram | Age: 35 | Gender: M | Home: Bangalore, India | Region: South India | Interests: Street Food, Night Markets, Photography | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[111/132] ID: tp-bangalore-1 | Name: Neha | Age: 28 | Gender: F | Home: Old Manali, India | Region: Himachal | Interests: Photography, Jazz, Nightlife | Type: Traveler | Appearance: fair skin, sharp features, dark hair, mountain-town features, may have rosy cheeks
+[112/132] ID: lp-mysore-1 | Name: Rahul | Age: 25 | Gender: M | Home: Mysore, India | Region: South India | Interests: History, Hiking, Photography | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[113/132] ID: lp-mysore-2 | Name: Rahul | Age: 24 | Gender: M | Home: Mysore, India | Region: South India | Interests: Live Music, Jazz, Backpacking | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[114/132] ID: tp-mysore-1 | Name: Sneha | Age: 23 | Gender: F | Home: Bangalore, India | Region: South India | Interests: Hiking, Art Galleries, Nightlife | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[115/132] ID: lp-ooty-1 | Name: Pooja | Age: 24 | Gender: F | Home: Ooty, India | Region: South India | Interests: Yoga, Street Food, Surfing | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[116/132] ID: lp-ooty-2 | Name: Diya | Age: 37 | Gender: F | Home: Ooty, India | Region: South India | Interests: Art Galleries, Live Music, Hiking | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[117/132] ID: tp-ooty-1 | Name: Rohan | Age: 25 | Gender: M | Home: Udaipur, India | Region: Rajasthan | Interests: Night Markets, Surfing, Live Music | Type: Traveler | Appearance: warm wheatish/golden-brown skin, dark eyes, dark hair, Rajasthani features
+[118/132] ID: lp-coorg-1 | Name: Aryan | Age: 22 | Gender: M | Home: Coorg, India | Region: South India | Interests: Coffee, Night Markets, Street Food | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[119/132] ID: lp-coorg-2 | Name: Neha | Age: 27 | Gender: F | Home: Coorg, India | Region: South India | Interests: Architecture, Live Music, Backpacking | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[120/132] ID: lp-gokarna-1 | Name: Rohan | Age: 24 | Gender: M | Home: Gokarna, India | Region: South India | Interests: Jazz, Backpacking, Art Galleries | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[121/132] ID: lp-gokarna-2 | Name: Aryan | Age: 37 | Gender: M | Home: Gokarna, India | Region: South India | Interests: Hiking, Live Music, Surfing | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[122/132] ID: lp-hampi-1 | Name: Diya | Age: 26 | Gender: F | Home: Hampi, India | Region: South India | Interests: Architecture, Live Music, History | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[123/132] ID: lp-hampi-2 | Name: Diya | Age: 33 | Gender: F | Home: Hampi, India | Region: South India | Interests: Art Galleries, Live Music, Jazz | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[124/132] ID: lp-kochi-1 | Name: Neha | Age: 23 | Gender: F | Home: Kochi, India | Region: Kerala | Interests: Art Galleries, Architecture, Surfing | Type: Local | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[125/132] ID: lp-kochi-2 | Name: Diya | Age: 30 | Gender: F | Home: Kochi, India | Region: Kerala | Interests: Surfing, Night Markets, Temples | Type: Local | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[126/132] ID: lp-varkala-1 | Name: Neha | Age: 33 | Gender: F | Home: Varkala, India | Region: Kerala | Interests: History, Temples, Backpacking | Type: Local | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[127/132] ID: lp-varkala-2 | Name: Aryan | Age: 29 | Gender: M | Home: Varkala, India | Region: Kerala | Interests: Street Food, Art Galleries, Photography | Type: Local | Appearance: warm brown skin, dark almond-shaped eyes, dark hair, Keralite features
+[128/132] ID: lp-puducherry-1 | Name: Rohan | Age: 25 | Gender: M | Home: Puducherry, India | Region: South India | Interests: Coffee, Live Music, Nightlife | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[129/132] ID: lp-puducherry-2 | Name: Neha | Age: 34 | Gender: F | Home: Puducherry, India | Region: South India | Interests: Temples, Nightlife, Coffee | Type: Local | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+[130/132] ID: lp-andaman-islands-1 | Name: Vikram | Age: 33 | Gender: M | Home: Andaman Islands, India | Region: Andaman | Interests: Nightlife, Hiking, Jazz | Type: Local | Appearance: warm brown skin, bright curious eyes, dark hair, coastal island vibe
+[131/132] ID: lp-andaman-islands-2 | Name: Neha | Age: 23 | Gender: F | Home: Andaman Islands, India | Region: Andaman | Interests: Yoga, Backpacking, History | Type: Local | Appearance: warm brown skin, bright curious eyes, dark hair, coastal island vibe
+[132/132] ID: tp-andaman-islands-2 | Name: Neha | Age: 22 | Gender: F | Home: Coorg, India | Region: South India | Interests: Nightlife, Night Markets, Temples | Type: Traveler | Appearance: warm dark brown skin, dark expressive eyes, dark hair, South Indian features
+================================================================
+REFERENCE EXAMPLES (48 previously crafted prompts — match this quality)
+================================================================
+
+Below are 48 prompts I previously wrote for some of these profiles.
+Use these as style and quality references. For profiles that appear
+in BOTH the list above AND these examples, use the example prompt
+as-is. For profiles NOT covered below, craft new prompts following
+the same pattern.
+
+================================================================
+GEMINI PRO IMAGE PROMPTS — INDIA PROFILES (48 total)
+Style: Photorealistic portrait, dark teal background, cinematic lighting
+================================================================
+
+--- [1/48] tp-chiang-mai-1 | Diya, 25 | Varkala, India ---
+Photorealistic portrait photo of Diya, a 25-year-old South Indian woman from Kerala with warm brown skin, long dark hair pulled back loosely, and bright curious eyes. She has a youthful adventurous energy — a traveler who loves street food, temples, and night markets.
+
+Upper body headshot, natural warm smile, casual breezy linen top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-chiang-mai-1.png
+
+--- [2/48] tp-kuala-lumpur-2 | Vikram, 22 | Shillong, India ---
+Photorealistic portrait photo of Vikram, a 22-year-old Northeast Indian man from Shillong with fair wheatish skin, slightly East Asian features, short tousled dark hair, and bright energetic eyes. He has an outdoorsy backpacker look — someone who loves hiking, photography, and adventure.
+
+Upper body headshot, relaxed confident expression, casual jacket or hoodie. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-kuala-lumpur-2.png
+
+--- [3/48] tp-penang-2 | Rohan, 36 | Shillong, India ---
+Photorealistic portrait photo of Rohan, a 36-year-old Northeast Indian man from Shillong with fair wheatish skin, slightly East Asian features, neatly kept dark hair, and a cool composed demeanor. He has a laid-back, jazz-loving vibe — a seasoned backpacker who enjoys nightlife.
+
+Upper body headshot, easy relaxed smile, casual open-collar shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-penang-2.png
+
+--- [4/48] tp-ubud-1 | Diya, 22 | Shillong, India ---
+Photorealistic portrait photo of Diya, a 22-year-old Northeast Indian woman from Shillong with fair skin, slightly East Asian features, straight dark hair worn loose, and serene expressive eyes. She has a spiritual, adventurous soul — someone who loves temples, jazz, and hiking in the hills.
+
+Upper body headshot, gentle warm smile, casual kurta or simple light top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-ubud-1.png
+
+--- [5/48] tp-ho-chi-minh-2 | Diya, 22 | Varanasi, India ---
+Photorealistic portrait photo of Diya, a 22-year-old North Indian woman from Varanasi with warm wheatish skin, large dark expressive eyes with a hint of kajal, and long dark hair worn loose. She has a thoughtful, culturally rich energy — someone who loves temples, art, and architecture.
+
+Upper body headshot, warm genuine smile, simple ethnic floral top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-ho-chi-minh-2.png
+
+--- [6/48] tp-taipei-2 | Neha, 28 | Varanasi, India ---
+Photorealistic portrait photo of Neha, a 28-year-old North Indian woman from Varanasi with wheatish skin, sharp refined features, dark eyes, and dark hair in a sleek half-up style. She has a modern cosmopolitan energy — an architecture enthusiast who thrives in night markets and city nightlife.
+
+Upper body headshot, confident stylish smile, contemporary casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-taipei-2.png
+
+--- [7/48] tp-hong-kong-1 | Pooja, 22 | Udaipur, India ---
+Photorealistic portrait photo of Pooja, a 22-year-old Rajasthani woman from Udaipur with warm golden-brown skin, bright dark eyes, and dark hair with soft waves. She wears small colorful earrings and has a vivacious artistic energy — someone who loves hiking, art galleries, and architecture.
+
+Upper body headshot, big bright radiant smile, colorful casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-hong-kong-1.png
+
+--- [8/48] tp-dubai-2 | Rahul, 35 | Puducherry, India ---
+Photorealistic portrait photo of Rahul, a 35-year-old South Indian man from Puducherry with warm dark brown skin, short neat dark hair, expressive eyes, and a calm composed presence. He has a quiet, curious traveler energy — a photographer who loves backpacking and temple architecture.
+
+Upper body headshot, relaxed thoughtful smile, clean casual cotton shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-dubai-2.png
+
+--- [9/48] tp-copenhagen-2 | Vikram, 28 | Old Manali, India ---
+Photorealistic portrait photo of Vikram, a 28-year-old Himachali man from Old Manali with fair skin, sharp mountain-town features, short dark hair, and a hint of stubble. He has a vibrant, music-loving energy — someone who thrives in nightlife and live music scenes.
+
+Upper body headshot, charismatic bold smile, casual hoodie or denim jacket. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-copenhagen-2.png
+
+--- [10/48] tp-tallinn-1 | Diya, 26 | Varkala, India ---
+Photorealistic portrait photo of Diya, a 26-year-old Keralite woman from Varkala with warm brown skin, dark almond eyes, and dark wavy hair worn loose. She has a grounded, spiritual energy — a yoga practitioner who loves history and street food by the beach.
+
+Upper body headshot, serene gentle smile, simple linen top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-tallinn-1.png
+
+--- [11/48] tp-vienna-2 | Vikram, 29 | Pushkar, India ---
+Photorealistic portrait photo of Vikram, a 29-year-old Rajasthani man from Pushkar with medium wheatish skin, dark eyes, short slightly curly hair, and a spiritual yet adventurous presence. He has a soulful wanderer energy — someone who loves hiking, temples, and nightlife.
+
+Upper body headshot, warm approachable smile, casual cotton shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-vienna-2.png
+
+--- [12/48] tp-valencia-2 | Rohan, 33 | Hampi, India ---
+Photorealistic portrait photo of Rohan, a 33-year-old South Indian man from Hampi with warm dark brown skin, short dark hair, strong features, and a quiet intellectual intensity. He has a creative, history-obsessed energy — someone who loves art galleries and knows every ruin in Hampi.
+
+Upper body headshot, easy thoughtful smile, casual collared shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-valencia-2.png
+
+--- [13/48] tp-seville-1 | Neha, 32 | Varkala, India ---
+Photorealistic portrait photo of Neha, a 32-year-old Keralite woman from Varkala with warm brown skin, dark expressive eyes, long dark hair in a ponytail, and an energetic sporty confidence. She loves surfing, hiking, and soaking up night markets wherever she travels.
+
+Upper body headshot, bright confident smile, casual athletic or breezy top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-seville-1.png
+
+--- [14/48] tp-rome-1 | Rahul, 22 | Varkala, India ---
+Photorealistic portrait photo of Rahul, a 22-year-old Keralite man from Varkala with warm brown skin, bright curious eyes, short neat dark hair, and a youthful open-minded look. He has an enthusiastic traveler energy — a photography buff who loves history and street food.
+
+Upper body headshot, genuine friendly smile, simple casual tee. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-rome-1.png
+
+--- [15/48] tp-hvar-1 | Neha, 36 | Pushkar, India ---
+Photorealistic portrait photo of Neha, a 36-year-old Rajasthani woman from Pushkar with warm wheatish skin, sharp elegant features, dark eyes lined with kajal, and dark hair tied back neatly. She has a regal, culturally grounded presence — someone who loves history, coffee, and exploring night markets.
+
+Upper body headshot, composed graceful smile, simple elegant top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-hvar-1.png
+
+--- [16/48] tp-toronto-2 | Diya, 34 | Varkala, India ---
+Photorealistic portrait photo of Diya, a 34-year-old Keralite woman from Varkala with warm brown skin, dark hair in a relaxed loose bun, and a calm knowing confidence. She has a mature, soulful energy — a temple enthusiast who moves between spiritual spaces and city nightlife with ease.
+
+Upper body headshot, warm confident smile, contemporary casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-toronto-2.png
+
+--- [17/48] tp-mexico-city-2 | Rahul, 23 | Varanasi, India ---
+Photorealistic portrait photo of Rahul, a 23-year-old North Indian man from Varanasi with medium wheatish skin, bright adventurous eyes, and short dark hair styled casually. He has an energetic, creative look — a photographer who loves surfing waves and exploring street food scenes worldwide.
+
+Upper body headshot, playful confident smile, casual streetwear top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-mexico-city-2.png
+
+--- [18/48] tp-buenos-aires-2 | Pooja, 31 | Goa, India ---
+Photorealistic portrait photo of Pooja, a 31-year-old Goan woman with warm tan skin, dark wavy hair worn loose, expressive eyes, and a free-spirited coastal confidence. She has a bohemian art-lover energy — someone who backpacks between galleries and night markets.
+
+Upper body headshot, bright open smile, breezy colorful casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-buenos-aires-2.png
+
+--- [19/48] tp-rio-de-janeiro-2 | Rahul, 27 | Old Manali, India ---
+Photorealistic portrait photo of Rahul, a 27-year-old Himachali man from Old Manali with fair skin, sharp mountain features, short dark hair, light stubble, and a rugged adventurous look. He has a surfer-meets-mountain-man energy — someone always chasing the next wave or night out.
+
+Upper body headshot, bold relaxed smile, casual outdoor jacket. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-rio-de-janeiro-2.png
+
+--- [20/48] tp-delhi-2 | Rohan, 35 | Shillong, India ---
+Photorealistic portrait photo of Rohan, a 35-year-old Northeast Indian man from Shillong with fair wheatish skin, slightly East Asian features, neat dark hair, and a calm composed urban look. He has a thoughtful, balanced energy — a yoga practitioner who loves architecture and city nightlife.
+
+Upper body headshot, quiet confident smile, smart casual shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-delhi-2.png
+
+--- [21/48] tp-leh-1 | Rohan, 34 | Udaipur, India ---
+Photorealistic portrait photo of Rohan, a 34-year-old Rajasthani man from Udaipur with warm wheatish skin, dark hair, a short rugged beard, and an outdoorsy relaxed confidence. He has a laid-back intellectual vibe — a coffee lover who spends weekends hiking through history.
+
+Upper body headshot, easy relaxed smile, casual shirt or light jacket. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-leh-1.png
+
+--- [22/48] lp-old-manali-1 | Diya, 34 | Old Manali, India ---
+Photorealistic portrait photo of Diya, a 34-year-old Himachali woman from Old Manali with fair skin, rosy cheeks from the mountain air, dark eyes, and dark hair worn in a loose braid. She has a warm free-spirited local guide energy — someone who knows every live music spot and hidden café.
+
+Upper body headshot, bright inviting smile, cozy ethnic top or knit sweater. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-old-manali-1.png
+
+--- [23/48] lp-old-manali-2 | Aryan, 36 | Old Manali, India ---
+Photorealistic portrait photo of Aryan, a 36-year-old Himachali man from Old Manali with fair skin, sharp angular features, medium-length dark hair, and a well-groomed beard. He has a soulful, mountain-dweller energy — a jazz musician and yoga practitioner who loves trekking.
+
+Upper body headshot, calm genuine smile, cozy knit sweater or flannel jacket. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-old-manali-2.png
+
+--- [24/48] tp-old-manali-2 | Vikram, 23 | Shillong, India ---
+Photorealistic portrait photo of Vikram, a 23-year-old Northeast Indian man from Shillong with fair skin, slightly East Asian features, short dark hair, and a youthful sporty energy. He has an active adventurous look — a guy who loves street food, surfing, and hiking in equal measure.
+
+Upper body headshot, enthusiastic wide smile, casual activewear or sporty tee. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-old-manali-2.png
+
+--- [25/48] lp-kasol-1 | Rahul, 35 | Kasol, India ---
+Photorealistic portrait photo of Rahul, a 35-year-old Himachali man from Kasol with fair skin, a relaxed bohemian vibe, short dark hair, and a casual short beard. He has a chill, artistic mountain energy — a coffee connoisseur who loves surfing and discovering art galleries.
+
+Upper body headshot, easy cool smile, casual flannel or open linen shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-kasol-1.png
+
+--- [26/48] lp-kasol-2 | Rahul, 28 | Kasol, India ---
+Photorealistic portrait photo of Rahul, a 28-year-old Himachali man from Kasol with fair skin, bright social eyes, short styled dark hair, and an upbeat fun-loving energy. He is the kind of guy who knows every street food stall and after-hours spot in the valley.
+
+Upper body headshot, warm playful grin, casual urban tee or hoodie. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-kasol-2.png
+
+--- [27/48] tp-bir-billing-2 | Neha, 34 | Shillong, India ---
+Photorealistic portrait photo of Neha, a 34-year-old Northeast Indian woman from Shillong with fair skin, slightly East Asian features, dark hair in a relaxed casual style, and a creative expressive look. She has a lively artistic soul — a live music devotee who loves art and street food.
+
+Upper body headshot, warm cheerful smile, stylish casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-bir-billing-2.png
+
+--- [28/48] tp-mcleod-ganj-2 | Diya, 31 | Goa, India ---
+Photorealistic portrait photo of Diya, a 31-year-old Goan woman with warm tan skin, dark wavy hair, relaxed coastal energy, and a bright spontaneous smile. She loves hiking, night markets, and coffee — equally at home on a beach as on a mountain trail.
+
+Upper body headshot, bright open smile, breezy casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-mcleod-ganj-2.png
+
+--- [29/48] tp-rishikesh-1 | Aryan, 33 | Varkala, India ---
+Photorealistic portrait photo of Aryan, a 33-year-old Keralite man from Varkala with warm brown skin, short dark hair, a neat trimmed beard, and a calm grounded presence. He has a spiritual traveler energy — someone who wanders between street food markets, coffee shops, and riverbank sunsets.
+
+Upper body headshot, relaxed warm smile, simple linen shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-rishikesh-1.png
+
+--- [30/48] lp-varanasi-1 | Diya, 25 | Varanasi, India ---
+Photorealistic portrait photo of Diya, a 25-year-old North Indian woman from Varanasi with warm wheatish skin, large dark eyes with kajal, and dark hair worn loose. She has a grounded, energetic local guide energy — knows every chai stall, ghat, and hidden alley in the city.
+
+Upper body headshot, bright genuine smile, casual kurta or ethnic cotton top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-varanasi-1.png
+
+--- [31/48] lp-varanasi-2 | Aryan, 38 | Varanasi, India ---
+Photorealistic portrait photo of Aryan, a 38-year-old North Indian man from Varanasi with medium wheatish skin, a distinguished look, dark hair with a few silver strands at the temples, and a short neat beard. He has a deep philosophical energy — a Varanasi local who balances spiritual life with nightlife.
+
+Upper body headshot, warm knowing smile, classic casual shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-varanasi-2.png
+
+--- [32/48] lp-shillong-1 | Neha, 38 | Shillong, India ---
+Photorealistic portrait photo of Neha, a 38-year-old Northeast Indian woman from Shillong with fair skin, slightly East Asian features, dark hair in an elegant updo, and a poised, confident presence. She has a culturally rich, intellectual energy — deeply passionate about history, architecture, and Shillong's nightlife.
+
+Upper body headshot, graceful composed smile, smart casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-shillong-1.png
+
+--- [33/48] lp-shillong-2 | Sneha, 36 | Shillong, India ---
+Photorealistic portrait photo of Sneha, a 36-year-old Northeast Indian woman from Shillong with fair skin, slightly East Asian features, dark hair worn loose, and a serene thoughtful look. She has a calm, mindful energy — a yoga practitioner who loves history and weekend hikes in the Meghalayan hills.
+
+Upper body headshot, soft gentle smile, comfortable casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-shillong-2.png
+
+--- [34/48] lp-udaipur-1 | Diya, 30 | Udaipur, India ---
+Photorealistic portrait photo of Diya, a 30-year-old Rajasthani woman from Udaipur with warm golden-brown skin, dark expressive eyes, dark hair with soft waves, and small ethnic earrings. She has a vibrant local guide energy — a hiker who knows the best street food and hidden haveli rooftops.
+
+Upper body headshot, radiant open smile, colorful casual top with a hint of traditional style. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-udaipur-1.png
+
+--- [35/48] lp-udaipur-2 | Neha, 29 | Udaipur, India ---
+Photorealistic portrait photo of Neha, a 29-year-old Rajasthani woman from Udaipur with warm wheatish skin, sharp confident features, kajal-lined dark eyes, and dark hair. She has a bold, independent energy — someone who loves nightlife, backpacking, and pushing her own limits.
+
+Upper body headshot, confident bright smile, modern casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-udaipur-2.png
+
+--- [36/48] tp-jodhpur-1 | Sneha, 23 | Kasol, India ---
+Photorealistic portrait photo of Sneha, a 23-year-old Himachali woman from Kasol with fair skin, rosy cheeks, dark hair in a casual ponytail, and a fresh outdoorsy look. She has a sporty energetic vibe — someone who loves surfing, studying architecture, and sipping coffee in hill-town cafés.
+
+Upper body headshot, cheerful enthusiastic smile, casual athletic or outdoor top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-jodhpur-1.png
+
+--- [37/48] lp-pushkar-1 | Rahul, 29 | Pushkar, India ---
+Photorealistic portrait photo of Rahul, a 29-year-old Rajasthani man from Pushkar with medium warm wheatish skin, dark eyes, short dark hair, and a spiritual yet grounded presence. He has a quiet, soulful guide energy — someone who loves hiking to sunrise spots, jazz evenings, and the chaos of night markets.
+
+Upper body headshot, warm friendly smile, simple cotton kurta or casual shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-pushkar-1.png
+
+--- [38/48] lp-pushkar-2 | Aryan, 36 | Pushkar, India ---
+Photorealistic portrait photo of Aryan, a 36-year-old Rajasthani man from Pushkar with warm wheatish skin, a neat beard, calm dark eyes, and an intellectual, culturally-rooted presence. He has a deep love for history, jazz, and ceremonial coffee — a true Pushkar local and storyteller.
+
+Upper body headshot, composed warm smile, casual kurta or relaxed linen shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-pushkar-2.png
+
+--- [39/48] lp-goa-1 | Rahul, 36 | Goa, India ---
+Photorealistic portrait photo of Rahul, a 36-year-old Goan man with warm tan brown skin, slightly tousled dark hair, a relaxed beach stubble, and easy charisma. He has a coastal creative energy — a local guide who loves art galleries, live music gigs, and hiking the Goan hillsides.
+
+Upper body headshot, relaxed charming smile, casual open linen shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-goa-1.png
+
+--- [40/48] lp-goa-2 | Sneha, 31 | Goa, India ---
+Photorealistic portrait photo of Sneha, a 31-year-old Goan woman with warm tan skin, dark wavy hair worn loose, and a vibrant spontaneous energy. She has a creative coastal spirit — a photographer who finds beauty in coffee mornings and Goa's nightlife.
+
+Upper body headshot, bright spontaneous smile, breezy casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-goa-2.png
+
+--- [41/48] tp-bangalore-1 | Neha, 28 | Old Manali, India ---
+Photorealistic portrait photo of Neha, a 28-year-old Himachali woman from Old Manali with fair skin, dark hair in a stylish casual cut, and a lively urban energy. She is creative and social — a photography enthusiast who loves jazz bars and the buzz of city nightlife.
+
+Upper body headshot, stylish confident smile, trendy casual top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-bangalore-1.png
+
+--- [42/48] tp-ooty-1 | Rohan, 25 | Udaipur, India ---
+Photorealistic portrait photo of Rohan, a 25-year-old Rajasthani man from Udaipur with warm wheatish skin, dark expressive eyes, short dark hair, and a youthful energetic presence. He has a fun-loving vibe — someone who chases live music, surf beaches, and late-night market food on every trip.
+
+Upper body headshot, enthusiastic warm smile, casual tee. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: tp-ooty-1.png
+
+--- [43/48] lp-hampi-1 | Diya, 26 | Hampi, India ---
+Photorealistic portrait photo of Diya, a 26-year-old South Indian woman from Hampi with warm dark brown skin, dark eyes full of curiosity, dark hair with a loose braid, and small traditional earrings. She has a deeply rooted cultural energy — a local guide who loves architecture, live music, and Hampi's ancient history.
+
+Upper body headshot, radiant warm smile, simple ethnic cotton top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-hampi-1.png
+
+--- [44/48] lp-hampi-2 | Diya, 33 | Hampi, India ---
+Photorealistic portrait photo of Diya, a 33-year-old South Indian woman from Hampi with warm dark brown skin, confident dark eyes, dark hair in a relaxed loose bun, and a creative artistic presence. She has a soulful, expressive energy — an art lover who lives and breathes Hampi's jazz and gallery scene.
+
+Upper body headshot, thoughtful artistic smile, casual elegant top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-hampi-2.png
+
+--- [45/48] lp-varkala-1 | Neha, 33 | Varkala, India ---
+Photorealistic portrait photo of Neha, a 33-year-old Keralite woman from Varkala with warm brown skin, dark almond-shaped eyes, long dark hair, and a grounded spiritual presence. She has a calm, soulful energy — deeply connected to Kerala's temples, history, and backpacker trails.
+
+Upper body headshot, serene warm smile, simple linen or cotton top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-varkala-1.png
+
+--- [46/48] lp-varkala-2 | Aryan, 29 | Varkala, India ---
+Photorealistic portrait photo of Aryan, a 29-year-old Keralite man from Varkala with warm brown skin, dark expressive eyes, short neat dark hair, and a creative coastal energy. He has a relaxed, artistic personality — a street food explorer and photographer who knows every hidden viewpoint along the cliff.
+
+Upper body headshot, easy friendly smile, casual cotton shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-varkala-2.png
+
+--- [47/48] lp-puducherry-1 | Rohan, 25 | Puducherry, India ---
+Photorealistic portrait photo of Rohan, a 25-year-old South Indian man from Puducherry with warm dark brown skin, bright eyes, short dark hair, and a lively social energy. He is the kind of local who knows every good coffee spot, live music venue, and late-night corner in Pondi.
+
+Upper body headshot, bright enthusiastic smile, clean casual shirt. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-puducherry-1.png
+
+--- [48/48] lp-puducherry-2 | Neha, 34 | Puducherry, India ---
+Photorealistic portrait photo of Neha, a 34-year-old South Indian woman from Puducherry with warm brown skin, dark eyes with kajal, dark hair in a relaxed style, and a calm soulful presence. She has a gentle but rooted energy — a temple devotee who also knows Puducherry's best nightlife and coffee houses.
+
+Upper body headshot, warm composed smile, simple elegant top. Dark teal studio background, soft cinematic lighting from the front-left, sharp focus on face, shallow depth of field. High resolution, professional portrait photography, mobile app avatar format, square crop. Do not add text, watermarks, or overlays. Real person aesthetic, not illustrated.
+Save as: lp-puducherry-2.png
+
+================================================================
+END OF PROMPTS — 48 total
+================================================================
+
+================================================================
+BEGIN — Start with Profile [1/132] now.
+================================================================

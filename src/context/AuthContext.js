@@ -14,21 +14,31 @@ export function AuthProvider({ children }) {
     const [currentTrip, setCurrentTrip] = useState(CURRENT_TRIP);
     const [isPremium, setIsPremium] = useState(false);
     const [matches, setMatches] = useState([]);
+    const [likedRecommendations, setLikedRecommendations] = useState([]);
 
     // Check for saved session on mount
     useEffect(() => {
         const checkSession = async () => {
+            // FORCE LOGIN: Deliberately ignore saved session 
+            // so testing always feels like the first time.
             try {
-                const sessionStr = await AsyncStorage.getItem('@vaya_session');
-                if (sessionStr) {
-                    const session = JSON.parse(sessionStr);
-                    setCurrentUser(session.user);
-                    setIsAuthenticated(true);
-                }
+                // We still clear it just to be safe
+                await AsyncStorage.removeItem('@vaya_session');
+                setIsAuthenticated(false);
             } catch (e) {
-                console.error('Failed to load session:', e);
+                console.error('Failed to clear session:', e);
             } finally {
                 setIsLoading(false);
+            }
+            
+            // Hydrate Liked Recommendations (Your Picks) independent of session
+            try {
+                const storedPicks = await AsyncStorage.getItem('@liked_recs');
+                if (storedPicks) {
+                    setLikedRecommendations(JSON.parse(storedPicks));
+                }
+            } catch (e) {
+                console.error('Failed to load saved picks:', e);
             }
         };
         
@@ -37,32 +47,30 @@ export function AuthProvider({ children }) {
 
     // Auth Mock Methods
     const signUp = async (email, password, name) => {
-        // Create a new mock user
+        // Create a new mock user (unified profile schema)
         const newUser = {
             id: 'user-' + Date.now(),
             email,
             name,
-            avatar: '🧑‍💻', // Default fallback
+            age: null,          // Set in profile setup
+            avatar: null,       // Set in profile setup
+            photo: null,
             bio: '',
-            home_city: 'Unknown',
+            home_city: '',
+            interests: [],
             photos: [],
             is_premium: false,
-            past_trips: [],
+            trips: [],          // active + past trips live here
         };
         
         setCurrentUser(newUser);
-        return newUser; // Return so the UI knows to send them to Profile Setup
+        return newUser; 
     };
 
     const logIn = async (email, password) => {
-        // Mock a login with the hardcoded current user (representing an existing account)
-        const user = { ...CURRENT_USER, email };
-        setCurrentUser(user);
-        
-        // Save session
-        await AsyncStorage.setItem('@vaya_session', JSON.stringify({ user }));
-        setIsAuthenticated(true);
-        return user; // Return so UI knows to skip Profile Setup
+        // FORCE ONBOARDING: Even for login, we treat them as a new user 
+        // to test the flow. We just use the email as their name if they didn't provide one.
+        return signUp(email, password, email.split('@')[0] || 'Traveler');
     };
 
     const logOut = async () => {
@@ -72,35 +80,40 @@ export function AuthProvider({ children }) {
     };
 
     // Onboarding Setup Methods
-    const completeProfileSetup = async (photos, bio, homeCity) => {
-        const updatedUser = { ...currentUser, photos, bio, home_city: homeCity };
-        setCurrentUser(updatedUser);
-        return updatedUser;
+    const completeProfileSetup = async (photos, bio, homeCity, interests = []) => {
+        let finalUser;
+        setCurrentUser(prev => {
+            finalUser = { ...prev, photos, bio, home_city: homeCity, interests };
+            return finalUser;
+        });
+        return finalUser;
     };
 
     const completeTripSetup = async (destination, startDate, endDate) => {
-        const updatedTrip = {
+        const newTrip = {
             id: 'trip-' + Date.now(),
-            user_id: currentUser.id,
+            user_id: currentUser?.id || 'current-user',
             destination_city: destination,
             start_date: startDate,
             end_date: endDate,
+            is_active: true,
         };
-        
-        // If there's an existing trip, move it to history
-        let updatedUser = { ...currentUser };
-        if (currentTrip) {
-            const history = updatedUser.past_trips ? [...updatedUser.past_trips] : [];
-            updatedUser.past_trips = [currentTrip, ...history];
-            setCurrentUser(updatedUser);
-        }
-        
-        setCurrentTrip(updatedTrip);
-        
-        // Once trip is set up, the onboarding flow is fully complete
-        // Save the session and log them in
-        await AsyncStorage.setItem('@vaya_session', JSON.stringify({ user: updatedUser }));
-        setIsAuthenticated(true);
+
+        // Deactivate any existing active trip, then add the new one
+        setCurrentUser(prev => {
+            const updatedTrips = (prev.trips || []).map(t =>
+                t.is_active ? { ...t, is_active: false } : t
+            );
+            const updatedUser = { ...prev, trips: [...updatedTrips, newTrip] };
+
+            // Once trip is set up, the onboarding flow is fully complete
+            AsyncStorage.setItem('@vaya_session', JSON.stringify({ user: updatedUser }))
+                .then(() => setIsAuthenticated(true));
+
+            return updatedUser;
+        });
+
+        setCurrentTrip(newTrip);
     };
 
     // Match Methods
@@ -110,6 +123,18 @@ export function AuthProvider({ children }) {
             if (prev.find((m) => m.id === matchedUser.id)) return prev;
             return [...prev, matchedUser];
         });
+    };
+
+    const addLikedRecommendation = (recommendation) => {
+        setLikedRecommendations((prev) => {
+            const idToMatch = recommendation.uniqueId || recommendation.id;
+            if (prev.find((r) => (r.uniqueId || r.id) === idToMatch)) return prev;
+            return [...prev, recommendation];
+        });
+    };
+
+    const removeLikedRecommendation = (idToRemove) => {
+        setLikedRecommendations((prev) => prev.filter((r) => (r.uniqueId || r.id) !== idToRemove));
     };
 
     return (
@@ -125,6 +150,9 @@ export function AuthProvider({ children }) {
                 setIsPremium,
                 matches,
                 addMatch,
+                likedRecommendations,
+                addLikedRecommendation,
+                removeLikedRecommendation,
                 
                 // Auth Actions
                 signUp,

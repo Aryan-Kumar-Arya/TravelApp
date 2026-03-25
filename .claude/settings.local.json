@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "WebSearch",
+      "WebFetch(domain:www.tripadvisor.com)",
+      "WebFetch(domain:storiesofraku.com)",
+      "WebFetch(domain:www.hostelworld.com)",
+      "WebFetch(domain:varkalavilla.com)",
+      "WebFetch(domain:india-guide.in)",
+      "WebFetch(domain:bestplaces.blog)",
+      "WebFetch(domain:www.backpackadventures.org)",
+      "WebFetch(domain:www.crazymasalafood.com)",
+      "WebFetch(domain:unsplash.com)"
+    ]
+  }
+}

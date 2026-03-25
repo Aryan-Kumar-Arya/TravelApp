@@ -16,14 +16,29 @@ import * as ImagePicker from 'expo-image-picker';
 import { useAuth } from '../context/AuthContext';
 import { theme as T } from '../theme/theme';
 import { Ionicons } from '@expo/vector-icons';
+import ProfilePreviewModal from '../components/ProfilePreviewModal';
+
+const INTEREST_OPTIONS = [
+  'Backpacking', 'Luxury', 'Foodie', 'Photography', 'Nature', 
+  'Nightlife', 'Culture', 'History', 'Adventure', 'Relaxation', 
+  'Shopping', 'Wellness', 'Road Trips', 'Beaches', 'Mountains', 
+  'Art & Museums', 'Festivals', 'Surfing', 'Architecture', 'Solo Travel'
+];
 
 const EditProfileScreen = ({ navigation }) => {
     const { currentUser, setCurrentUser } = useAuth();
     
-    // Form State, prefilled with existing data
-    const [photos, setPhotos] = useState(currentUser.photos && currentUser.photos.length > 0 ? currentUser.photos : [null, null, null]);
+    // Ensure 4 slots
+    const initialPhotos = [null, null, null, null];
+    if (currentUser.photos) {
+        currentUser.photos.forEach((p, i) => { if (i < 4) initialPhotos[i] = p; });
+    }
+
+    const [photos, setPhotos] = useState(initialPhotos);
     const [bio, setBio] = useState(currentUser.bio || '');
     const [homeLocation, setHomeLocation] = useState(currentUser.home_city || '');
+    const [selectedInterests, setSelectedInterests] = useState(currentUser.interests || currentUser.selectedInterests || []);
+    const [showPreview, setShowPreview] = useState(false);
     
     // Autocomplete State
     const [searchQuery, setSearchQuery] = useState(currentUser.home_city || '');
@@ -51,6 +66,14 @@ const EditProfileScreen = ({ navigation }) => {
         const newPhotos = [...photos];
         newPhotos[index] = null;
         setPhotos(newPhotos);
+    };
+
+    const toggleInterest = (interest) => {
+        if (selectedInterests.includes(interest)) {
+            setSelectedInterests(selectedInterests.filter(i => i !== interest));
+        } else {
+            setSelectedInterests([...selectedInterests, interest]);
+        }
     };
 
     // --- City Autocomplete Logic ---
@@ -111,12 +134,13 @@ const EditProfileScreen = ({ navigation }) => {
     // --- Validation and Save ---
     const hasRequiredFields = () => {
         const hasAtLeastOnePhoto = photos.some(p => p !== null);
-        return hasAtLeastOnePhoto && bio.trim().length > 0 && homeLocation.trim().length > 0;
+        const hasMinimumTags = selectedInterests.length >= 5;
+        return hasAtLeastOnePhoto && bio.trim().length > 0 && homeLocation.trim().length > 0 && hasMinimumTags;
     };
 
     const handleSave = async () => {
         if (!hasRequiredFields()) {
-            Alert.alert("Missing Details", "Please upload at least one photo, add a bio, and select your home location.");
+            Alert.alert("Missing Details", "Please upload at least one photo, add a bio, select 5 interests, and set your home location.");
             return;
         }
 
@@ -127,7 +151,8 @@ const EditProfileScreen = ({ navigation }) => {
             ...currentUser,
             photos: finalPhotos,
             bio: bio.trim(),
-            home_city: homeLocation
+            home_city: homeLocation,
+            selectedInterests
         });
         
         navigation.goBack();
@@ -144,57 +169,37 @@ const EditProfileScreen = ({ navigation }) => {
                     <Ionicons name="chevron-back" size={28} color={T.text.primary} />
                 </TouchableOpacity>
                 <Text style={styles.title}>Edit Profile</Text>
-                <View style={{ width: 40 }} /> {/* spacer for flex header */}
+                <TouchableOpacity onPress={() => setShowPreview(true)} style={styles.previewBtn}>
+                    <Text style={styles.previewBtnText}>Preview</Text>
+                </TouchableOpacity>
             </View>
             
             <ScrollView contentContainerStyle={styles.scrollContent} keyboardShouldPersistTaps="handled">
                 <Text style={styles.subtitle}>Update your profile information</Text>
                 
                 {/* ── Photo Grid ── */}
-                <View style={styles.photoSection}>
-                    {/* Main Photo (Slot 0) */}
-                    <TouchableOpacity 
-                        style={[styles.photoSlot, styles.photoMain]} 
-                        onPress={() => pickImage(0)}
-                    >
-                        {photos[0] ? (
-                            <>
-                                <Image source={{ uri: photos[0] }} style={styles.photoImg} />
-                                <TouchableOpacity style={styles.removeBtn} onPress={() => removeImage(0)}>
-                                    <Ionicons name="close-circle" size={24} color="#FFF" />
-                                </TouchableOpacity>
-                            </>
-                        ) : (
-                            <View style={styles.photoPlaceholder}>
-                                <Text style={styles.photoIcon}>📷</Text>
-                                <Text style={styles.photoText}>Required</Text>
-                            </View>
-                        )}
-                    </TouchableOpacity>
-
-                    {/* Secondary Photos (Slots 1 & 2) */}
-                    <View style={styles.photoRow}>
-                        {[1, 2].map((index) => (
-                            <TouchableOpacity 
-                                key={index}
-                                style={styles.photoSlot} 
-                                onPress={() => pickImage(index)}
-                            >
-                                {photos[index] ? (
-                                    <>
-                                        <Image source={{ uri: photos[index] }} style={styles.photoImg} />
-                                        <TouchableOpacity style={styles.removeBtn} onPress={() => removeImage(index)}>
-                                            <Ionicons name="close-circle" size={24} color="#FFF" />
-                                        </TouchableOpacity>
-                                    </>
-                                ) : (
-                                    <View style={styles.photoPlaceholder}>
-                                        <Text style={styles.photoIcon}>+</Text>
+                <View style={styles.photoGrid}>
+                    {photos.map((uri, index) => (
+                        <TouchableOpacity
+                            key={index}
+                            style={[styles.photoSlot, uri && styles.photoSlotFilled]}
+                            onPress={() => uri ? removeImage(index) : pickImage(index)}
+                        >
+                            {uri ? (
+                                <>
+                                    <Image source={{ uri }} style={styles.photoImg} />
+                                    <View style={styles.removeBadge}>
+                                        <Text style={styles.removeBadgeText}>✕</Text>
                                     </View>
-                                )}
-                            </TouchableOpacity>
-                        ))}
-                    </View>
+                                </>
+                            ) : (
+                                <View style={styles.emptySlotContent}>
+                                    <Text style={styles.addPhotoIcon}>+</Text>
+                                    {index === 0 && <Text style={styles.mandatoryText}>Required</Text>}
+                                </View>
+                            )}
+                        </TouchableOpacity>
+                    ))}
                 </View>
 
                 {/* ── Home Location ── */}
@@ -257,6 +262,27 @@ const EditProfileScreen = ({ navigation }) => {
                         textAlignVertical="top"
                     />
                 </View>
+
+                {/* ── Interests ── */}
+                <View style={[styles.inputGroup, { marginBottom: 40 }]}>
+                    <Text style={styles.label}>Interests (5 minimum)</Text>
+                    <View style={styles.interestsContainer}>
+                        {INTEREST_OPTIONS.map((interest, idx) => {
+                            const isSelected = selectedInterests.includes(interest);
+                            return (
+                                <TouchableOpacity 
+                                    key={idx}
+                                    style={[styles.interestPill, isSelected && styles.interestPillSelected]}
+                                    onPress={() => toggleInterest(interest)}
+                                >
+                                    <Text style={[styles.interestText, isSelected && styles.interestTextSelected]}>
+                                        {interest}
+                                    </Text>
+                                </TouchableOpacity>
+                            );
+                        })}
+                    </View>
+                </View>
             </ScrollView>
 
             <View style={styles.footer}>
@@ -268,6 +294,18 @@ const EditProfileScreen = ({ navigation }) => {
                     <Text style={styles.saveBtnText}>Save Changes</Text>
                 </TouchableOpacity>
             </View>
+
+            <ProfilePreviewModal 
+                visible={showPreview}
+                onClose={() => setShowPreview(false)}
+                draftProfile={{
+                    ...currentUser,
+                    photos: photos.filter(p => p !== null),
+                    bio: bio,
+                    home_city: homeLocation,
+                    selectedInterests
+                }}
+            />
         </KeyboardAvoidingView>
     );
 };
@@ -307,58 +345,78 @@ const styles = StyleSheet.create({
         marginBottom: 24,
     },
     
+    previewBtn: {
+        paddingVertical: 8,
+        paddingHorizontal: 16,
+        backgroundColor: T.bg.elevated,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: T.border.medium,
+    },
+    previewBtnText: {
+        fontSize: 13,
+        fontWeight: '700',
+        color: T.text.primary,
+    },
+    
     // Photo Grid
-    photoSection: {
+    photoGrid: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 8,
+        justifyContent: 'space-between',
         marginBottom: 32,
     },
     photoSlot: {
+        width: '48%', 
+        aspectRatio: 1.1,
         backgroundColor: T.bg.input,
         borderRadius: T.radius.md,
         borderWidth: 2,
-        borderColor: T.border.subtle,
         borderStyle: 'dashed',
+        borderColor: T.border.medium,
+        justifyContent: 'center',
+        alignItems: 'center',
         overflow: 'hidden',
-        position: 'relative',
     },
-    photoMain: {
-        width: '100%',
-        aspectRatio: 16/9,
-        marginBottom: 12,
-    },
-    photoRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        gap: 12,
-    },
-    photoRowSlot: {
-        flex: 1,
-        aspectRatio: 1,
+    photoSlotFilled: {
+        borderStyle: 'solid',
+        borderColor: T.brand.primaryMuted,
+        borderWidth: 1,
     },
     photoImg: {
         width: '100%',
         height: '100%',
+        resizeMode: 'cover',
     },
-    photoPlaceholder: {
-        flex: 1,
-        justifyContent: 'center',
+    emptySlotContent: {
         alignItems: 'center',
     },
-    photoIcon: {
-        fontSize: 24,
+    addPhotoIcon: {
+        fontSize: 32,
         color: T.text.tertiary,
         marginBottom: 4,
     },
-    photoText: {
+    mandatoryText: {
         fontSize: 12,
-        fontWeight: '700',
         color: T.text.tertiary,
+        fontWeight: '600',
     },
-    removeBtn: {
+    removeBadge: {
         position: 'absolute',
         top: 8,
         right: 8,
-        backgroundColor: 'rgba(0,0,0,0.4)',
-        borderRadius: 12,
+        backgroundColor: 'rgba(0,0,0,0.6)',
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    removeBadgeText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
     },
 
     // Inputs
@@ -444,6 +502,33 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         textAlign: 'center',
         width: '100%',
+    },
+
+    // --- Interests Styles ---
+    interestsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        gap: 10,
+    },
+    interestPill: {
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 20,
+        backgroundColor: T.bg.input,
+        borderWidth: 1,
+        borderColor: T.border.subtle,
+    },
+    interestPillSelected: {
+        backgroundColor: T.brand.primary,
+        borderColor: T.brand.primary,
+    },
+    interestText: {
+        color: T.text.secondary,
+        fontSize: 14,
+        fontWeight: '600',
+    },
+    interestTextSelected: {
+        color: '#FFFFFF',
     },
 
     // Footer

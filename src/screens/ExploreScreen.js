@@ -1,95 +1,161 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     TouchableOpacity,
     Dimensions,
+    Image,
+    ScrollView,
+    Alert,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Animated, {
     useSharedValue,
     useAnimatedStyle,
     withSpring,
+    withTiming,
     interpolate,
     Extrapolation,
     runOnJS,
 } from 'react-native-reanimated';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { LinearGradient } from 'expo-linear-gradient';
 import { useAuth } from '../context/AuthContext';
-import { TRAVELER_PROFILES, LOCAL_PROFILES } from '../data/mockData';
 import { getOverlapTravelers } from '../utils/matching';
+import { DISCOVER_PROFILES } from '../data/discoverProfiles';
+import { getProfileImageSource } from '../utils/profileImage';
 import { theme as T } from '../theme/theme';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SWIPE_THRESHOLD = SCREEN_WIDTH * 0.3;
 
-// ─── Single Swipe Card ─────────────────────────────────────────
-const SwipeCard = ({ card, isLocal, style }) => {
+const ScrollableProfileCard = React.memo(({ card, isLocal, destinationCity, style }) => {
+    const imageSource = getProfileImageSource(card);
+    const firstName = card.name ? card.name.split(' ')[0] : 'Traveler';
+
     return (
-        <Animated.View style={[styles.card, isLocal && styles.cardPremium, style]}>
-            {/* Avatar area */}
-            <View style={[styles.avatarArea, isLocal && styles.avatarAreaPremium]}>
-                <Text style={styles.avatarEmoji}>{card.avatar}</Text>
-            </View>
-
-            {/* Info area */}
-            <View style={styles.cardInfo}>
-                <View style={styles.nameRow}>
-                    <Text style={styles.cardName}>{card.name}</Text>
-                    <Text style={styles.cardAge}>{card.age}</Text>
-                </View>
-                <Text style={styles.cardBio} numberOfLines={2}>{card.bio}</Text>
-
-                {/* Interest tags */}
-                <View style={styles.tagsRow}>
-                    {(card.interests || []).slice(0, 3).map((tag, i) => (
-                        <View key={i} style={[styles.tag, isLocal && styles.tagPremium]}>
-                            <Text style={[styles.tagText, isLocal && styles.tagTextPremium]}>{tag}</Text>
-                        </View>
-                    ))}
-                </View>
-
-                {/* Overlap badge (only for travelers) */}
-                {card.overlapDates && (
-                    <View style={styles.overlapBadge}>
-                        <Text style={styles.overlapIcon}>📅</Text>
-                        <View>
-                            <Text style={styles.overlapLabel}>
-                                {card.overlapDays} overlapping day{card.overlapDays > 1 ? 's' : ''}
-                            </Text>
-                            <Text style={styles.overlapDates}>{card.overlapDates}</Text>
+        <Animated.View style={[styles.card, style]}>
+            <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+                {/* Hero Profile Image Section */}
+                <View style={styles.heroImageContainer}>
+                    {imageSource ? (
+                        <Image
+                            source={imageSource}
+                            style={StyleSheet.absoluteFillObject}
+                        />
+                    ) : (
+                        <LinearGradient
+                            colors={['#1E3A5F', '#0F172A']}
+                            style={StyleSheet.absoluteFillObject}
+                        />
+                    )}
+                    <LinearGradient
+                        colors={['transparent', 'transparent', 'rgba(15,23,42,0.9)']}
+                        locations={[0.5, 0.7, 1]}
+                        style={StyleSheet.absoluteFillObject}
+                    />
+                    
+                    {/* Basic Info at bottom of hero image */}
+                    <View style={styles.heroBasicInfo}>
+                        <View style={styles.nameRow}>
+                            <Text style={styles.cardName}>{firstName}, {card.age}</Text>
                         </View>
                     </View>
-                )}
+                </View>
 
-                {/* Local badge */}
-                {isLocal && (
-                    <View style={styles.localBadge}>
-                        <Text style={styles.localBadgeText}>📍 Lives in {card.home_city}</Text>
+                {/* Info Container below the image */}
+                <View style={styles.scrollInfoArea}>
+                    
+                    <View style={styles.infoSection}>
+                        <Text style={styles.sectionHeading}>About me</Text>
+                        <Text style={styles.cardBio}>{card.bio}</Text>
                     </View>
-                )}
-            </View>
+
+                    <View style={styles.infoSection}>
+                        <Text style={styles.sectionHeading}>Location Details</Text>
+                        <View style={styles.locationRow}>
+                            <Ionicons name="home" size={16} color="#94A3B8" />
+                            <Text style={styles.locationDetailText}>From {card.home_city}</Text>
+                        </View>
+                        {!isLocal && (
+                            <View style={styles.locationRow}>
+                                <Ionicons name="location" size={16} color="#94A3B8" />
+                                <Text style={styles.locationDetailText}>
+                                    Visiting {destinationCity || 'Unknown'}
+                                </Text>
+                            </View>
+                        )}
+                        {!isLocal && card.overlapDays > 0 && (
+                            <View style={[styles.locationRow, { marginTop: 4 }]}>
+                                <Ionicons name="calendar" size={16} color={T.brand.primaryLight} />
+                                <Text style={[styles.locationDetailText, { color: T.brand.primaryLight }]}>
+                                    {card.overlapDays} days overlapping!
+                                </Text>
+                            </View>
+                        )}
+                    </View>
+
+                    {/* Tags */}
+                    {card.interests && card.interests.length > 0 && (
+                        <View style={styles.infoSection}>
+                            <Text style={styles.sectionHeading}>Interests</Text>
+                            <View style={styles.tagsRow}>
+                                {card.interests.map((tag, i) => (
+                                    <View key={i} style={styles.tag}>
+                                        <Text style={styles.tagText}>{tag}</Text>
+                                    </View>
+                                ))}
+                            </View>
+                        </View>
+                    )}
+
+                    {/* Placeholder for Additional Photos like Bumble */}
+                    <View style={styles.photoGrid}>
+                        <View style={styles.photoPlaceholder}>
+                            <Ionicons name="image-outline" size={32} color="#334155" />
+                        </View>
+                        <View style={styles.photoPlaceholder}>
+                            <Ionicons name="image-outline" size={32} color="#334155" />
+                        </View>
+                    </View>
+                    
+                    <View style={{height: 40}} />
+                </View>
+            </ScrollView>
         </Animated.View>
     );
-};
+});
 
-// ─── Main Explore Screen ────────────────────────────────────────
-const ExploreScreen = () => {
-    const { currentTrip, isPremium, setIsPremium, addMatch } = useAuth();
-
-    const [activeStack, setActiveStack] = useState('travelers');
-    const [showPaywall, setShowPaywall] = useState(false);
-    const [currentIndex, setCurrentIndex] = useState(0);
+export default function ExploreScreen() {
+    const { currentTrip, addMatch } = useAuth();
+    
+    const [activeFilter, setActiveFilter] = useState('traveller');
+    const [travellerIndex, setTravellerIndex] = useState(0);
     const [localIndex, setLocalIndex] = useState(0);
 
-    // Apply matching algo
-    const filteredTravelers = useMemo(
-        () => getOverlapTravelers(currentTrip, TRAVELER_PROFILES),
-        [currentTrip]
-    );
+    const filteredTravelers = useMemo(() => {
+        if (!currentTrip?.destination_city) return [];
+        const targetCityTravelers = DISCOVER_PROFILES.filter(p =>
+            !p.home_city.toLowerCase().startsWith(currentTrip.destination_city.toLowerCase()) &&
+            p.trips?.some(trip => trip.destination_city === currentTrip.destination_city)
+        );
+        return getOverlapTravelers(currentTrip, targetCityTravelers).sort((a,b) => (b.overlapDays || 0) - (a.overlapDays || 0));
+    }, [currentTrip]);
 
-    const cards = activeStack === 'travelers' ? filteredTravelers : LOCAL_PROFILES;
-    const idx = activeStack === 'travelers' ? currentIndex : localIndex;
+    const filteredLocals = useMemo(() => {
+        if (!currentTrip?.destination_city) return [];
+        return DISCOVER_PROFILES.filter(p =>
+            p.home_city.toLowerCase().startsWith(currentTrip.destination_city.toLowerCase())
+        );
+    }, [currentTrip]);
+
+    const getStackData = () => {
+        if (activeFilter === 'traveller') return { cards: filteredTravelers, idx: travellerIndex, setIdx: setTravellerIndex };
+        return { cards: filteredLocals, idx: localIndex, setIdx: setLocalIndex };
+    };
+
+    const { cards, idx, setIdx } = getStackData();
     const currentCard = cards[idx];
     const nextCard = cards[idx + 1];
 
@@ -99,52 +165,50 @@ const ExploreScreen = () => {
     const handleSwipeComplete = useCallback(
         (direction) => {
             if (direction === 'right' && currentCard) {
-                if (Math.random() > 0.6) {
-                    addMatch({
-                        ...currentCard,
-                        matchedAt: new Date().toISOString(),
-                        city: currentTrip.destination_city,
-                    });
-                }
+                // Instantly adding to match list on right swipe per user request
+                addMatch({
+                    ...currentCard,
+                    matchedAt: new Date().toISOString(),
+                });
             }
-            if (activeStack === 'travelers') {
-                setCurrentIndex((prev) => prev + 1);
-            } else {
-                setLocalIndex((prev) => prev + 1);
-            }
+            setIdx((prev) => prev + 1);
         },
-        [activeStack, currentCard, addMatch, currentTrip]
+        [currentCard, addMatch, setIdx]
     );
 
-    const panGesture = Gesture.Pan()
+    const panGesture = useMemo(() => Gesture.Pan()
+        // Ensure vertical scrolling still works on the inner ScrollView
+        .activeOffsetX([-15, 15]) 
         .onUpdate((event) => {
             translateX.value = event.translationX;
             translateY.value = event.translationY;
         })
         .onEnd((event) => {
-            if (event.translationX > SWIPE_THRESHOLD) {
-                translateX.value = withSpring(SCREEN_WIDTH * 1.5, { damping: 15 }, () => {
+            const velocityX = event.velocityX;
+
+            if (event.translationX > SWIPE_THRESHOLD || velocityX > 600) {
+                translateX.value = withTiming(SCREEN_WIDTH * 1.2, { duration: 150 }, () => {
                     runOnJS(handleSwipeComplete)('right');
                     translateX.value = 0;
                     translateY.value = 0;
                 });
-            } else if (event.translationX < -SWIPE_THRESHOLD) {
-                translateX.value = withSpring(-SCREEN_WIDTH * 1.5, { damping: 15 }, () => {
+            } else if (event.translationX < -SWIPE_THRESHOLD || velocityX < -600) {
+                translateX.value = withTiming(-SCREEN_WIDTH * 1.2, { duration: 150 }, () => {
                     runOnJS(handleSwipeComplete)('left');
                     translateX.value = 0;
                     translateY.value = 0;
                 });
             } else {
-                translateX.value = withSpring(0, { damping: 20, stiffness: 200 });
-                translateY.value = withSpring(0, { damping: 20, stiffness: 200 });
+                translateX.value = withSpring(0, { damping: 20, stiffness: 450 });
+                translateY.value = withSpring(0, { damping: 20, stiffness: 450 });
             }
-        });
+        }), [handleSwipeComplete]);
 
     const topCardStyle = useAnimatedStyle(() => ({
         transform: [
             { translateX: translateX.value },
             { translateY: translateY.value },
-            { rotate: `${interpolate(translateX.value, [-SCREEN_WIDTH, 0, SCREEN_WIDTH], [-15, 0, 15])}deg` },
+            { rotate: `${interpolate(translateX.value, [-SCREEN_WIDTH, 0, SCREEN_WIDTH], [-10, 0, 10])}deg` },
         ],
     }));
 
@@ -175,78 +239,77 @@ const ExploreScreen = () => {
         ),
     }));
 
-    const toggleStack = (stack) => {
-        if (stack === 'locals' && !isPremium) {
-            setShowPaywall(true);
-            return;
+    const handleFilterSelect = (filter) => {
+        if (filter === 'local') {
+            Alert.alert(
+                "Unlock Local Connect 🌍",
+                "Start a premium subscription for just $5/week to match with locals in your destination!",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    { text: "Subscribe", onPress: () => {
+                        setActiveFilter('local');
+                        setLocalIndex(0);
+                    }}
+                ]
+            );
+        } else {
+            setActiveFilter('traveller');
+            setTravellerIndex(0);
         }
-        setActiveStack(stack);
-    };
-
-    const handleButtonSwipe = (direction) => {
-        translateX.value = withSpring(
-            direction === 'right' ? SCREEN_WIDTH * 1.5 : -SCREEN_WIDTH * 1.5,
-            { damping: 15 },
-            () => {
-                runOnJS(handleSwipeComplete)(direction);
-                translateX.value = 0;
-                translateY.value = 0;
-            }
-        );
     };
 
     return (
         <View style={styles.container}>
-            {/* ── Header ── */}
+            {/* Header Exactly mapped to ExploreSwipeScreen.js setup */}
             <View style={styles.header}>
-                <Text style={styles.headerTitle}>
-                    {activeStack === 'travelers' ? '🌍' : '📍'}{' '}
-                    {currentTrip.destination_city}
-                </Text>
-                <View style={styles.toggleContainer}>
-                    <TouchableOpacity
-                        style={[styles.toggleBtn, activeStack === 'travelers' && styles.activeBtnFree]}
-                        onPress={() => toggleStack('travelers')}
+                <Text style={styles.headerEyebrow}>DISCOVER AND CONNECT</Text>
+                <Text style={styles.headerSubline}>Make connections with fellow travellers and locals</Text>
+            </View>
+
+            {/* Filter Pills */}
+            <View style={styles.filterContainer}>
+                <View style={styles.filterBtnGroup}>
+                    <TouchableOpacity 
+                        style={[styles.bigFilterPill, activeFilter === 'traveller' && styles.bigFilterPillActive]}
+                        onPress={() => handleFilterSelect('traveller')}
                     >
-                        <Text style={[styles.toggleText, activeStack === 'travelers' && styles.activeTextFree]}>
-                            Global Nomad
-                        </Text>
+                        <Text style={[styles.filterText, activeFilter === 'traveller' && styles.filterTextActive]}>Traveller</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.toggleBtn, activeStack === 'locals' && styles.activeBtnPremium]}
-                        onPress={() => toggleStack('locals')}
+                    
+                    <TouchableOpacity 
+                        style={[styles.bigFilterPill, activeFilter === 'local' && styles.bigFilterPillActiveLocal]}
+                        onPress={() => handleFilterSelect('local')}
                     >
-                        <Text style={[styles.toggleText, activeStack === 'locals' && styles.activeTextPremium]}>
-                            Local Guide 👑
-                        </Text>
+                        <Text style={[styles.filterText, activeFilter === 'local' && styles.filterTextActiveLocal]}>Local</Text>
                     </TouchableOpacity>
                 </View>
             </View>
 
-            {/* ── Card Stack ── */}
+            {/* Card Area exactly matching ExploreSwipeScreen's card scale and dimension */}
             <View style={styles.cardArea}>
                 {currentCard ? (
                     <>
                         {nextCard && (
-                            <SwipeCard
+                            <ScrollableProfileCard
                                 card={nextCard}
-                                isLocal={activeStack === 'locals'}
+                                isLocal={activeFilter === 'local'}
+                                destinationCity={currentTrip?.destination_city}
                                 style={[styles.cardAbsolute, nextCardScale]}
                             />
                         )}
                         <GestureDetector gesture={panGesture}>
-                            <Animated.View style={[styles.cardAbsolute]}>
+                            <Animated.View style={[styles.cardAbsolute, topCardStyle]}>
+                                <ScrollableProfileCard
+                                    card={currentCard}
+                                    isLocal={activeFilter === 'local'}
+                                    destinationCity={currentTrip?.destination_city}
+                                />
                                 <Animated.View style={[styles.overlayLabel, styles.overlayLike, likeOpacity]}>
-                                    <Text style={styles.overlayLikeText}>LIKE</Text>
+                                    <Text style={styles.overlayLikeText}>CONNECT</Text>
                                 </Animated.View>
                                 <Animated.View style={[styles.overlayLabel, styles.overlayNope, nopeOpacity]}>
-                                    <Text style={styles.overlayNopeText}>NOPE</Text>
+                                    <Text style={styles.overlayNopeText}>PASS</Text>
                                 </Animated.View>
-                                <SwipeCard
-                                    card={currentCard}
-                                    isLocal={activeStack === 'locals'}
-                                    style={topCardStyle}
-                                />
                             </Animated.View>
                         </GestureDetector>
                     </>
@@ -255,250 +318,190 @@ const ExploreScreen = () => {
                         <Text style={styles.emptyEmoji}>🗺️</Text>
                         <Text style={styles.emptyTitle}>You've seen everyone!</Text>
                         <Text style={styles.emptySubtitle}>
-                            Check back later for new {activeStack === 'travelers' ? 'travelers' : 'locals'}.
+                            Check back later for new {activeFilter === 'traveller' ? 'travellers' : 'locals'} in {currentTrip?.destination_city}.
                         </Text>
                     </View>
                 )}
             </View>
-
-            {/* ── Action Buttons ── */}
-            {currentCard && (
-                <View style={styles.actionButtons}>
-                    <TouchableOpacity
-                        style={[styles.actionBtn, styles.nopeBtn]}
-                        onPress={() => handleButtonSwipe('left')}
-                    >
-                        <Text style={styles.nopeBtnText}>✕</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={[styles.actionBtn, styles.likeBtn]}
-                        onPress={() => handleButtonSwipe('right')}
-                    >
-                        <Text style={styles.likeBtnText}>♥</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-
-            {/* ── Paywall ── */}
-            {showPaywall && (
-                <View style={styles.paywallOverlay}>
-                    <View style={styles.paywallModal}>
-                        <Text style={styles.paywallEmoji}>👑</Text>
-                        <Text style={styles.paywallTitle}>Unlock Local Guides</Text>
-                        <Text style={styles.paywallDesc}>
-                            Meet verified locals in {currentTrip.destination_city}.
-                            Get insider tips, hidden gems, and authentic experiences.
-                        </Text>
-                        <View style={styles.paywallFeatures}>
-                            {['Unlimited local matches', 'See who liked you', 'Priority in search'].map(
-                                (f, i) => (
-                                    <View key={i} style={styles.featureRow}>
-                                        <Text style={styles.featureCheck}>✓</Text>
-                                        <Text style={styles.featureText}>{f}</Text>
-                                    </View>
-                                )
-                            )}
-                        </View>
-                        <TouchableOpacity
-                            style={styles.payButton}
-                            onPress={() => {
-                                setIsPremium(true);
-                                setShowPaywall(false);
-                                setActiveStack('locals');
-                            }}
-                        >
-                            <Text style={styles.payButtonText}>Upgrade — $9.99/mo</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => setShowPaywall(false)} style={styles.cancelBtn}>
-                            <Text style={styles.cancelText}>Maybe Later</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )}
         </View>
     );
-};
+}
 
-// ─── Styles ─────────────────────────────────────────────────────
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: T.bg.primary,
     },
+    // Header (Reusing ExploreSwipeScreen style)
     header: {
         paddingTop: 60,
-        paddingHorizontal: 20,
-        paddingBottom: 12,
+        paddingHorizontal: 24,
+        paddingBottom: 0,
     },
-    headerTitle: {
-        fontSize: 22,
+    headerEyebrow: {
+        fontSize: 12,
         fontWeight: '800',
-        color: T.text.primary,
-        textAlign: 'center',
-        marginBottom: 12,
+        color: T.brand.primaryLight,
+        letterSpacing: 2,
+        marginBottom: 8,
+        textTransform: 'uppercase',
     },
-    toggleContainer: {
+    headerSubline: {
+        fontSize: 14,
+        fontWeight: '500',
+        color: T.text.secondary,
+        marginTop: 2,
+    },
+
+    // Big Capsule Filters
+    filterContainer: {
+        paddingTop: 24,
+        paddingBottom: 16,
+        paddingHorizontal: 24,
+    },
+    filterBtnGroup: {
         flexDirection: 'row',
-        backgroundColor: T.bg.input,
+        backgroundColor: T.bg.elevated, // Track color
         borderRadius: 30,
         padding: 4,
     },
-    toggleBtn: {
+    bigFilterPill: {
         flex: 1,
-        paddingVertical: 10,
         alignItems: 'center',
+        paddingVertical: 12,
         borderRadius: 26,
     },
-    activeBtnFree: {
-        backgroundColor: T.bg.card,
-        ...T.shadow.soft,
+    bigFilterPillActive: {
+        backgroundColor: T.brand.primary, // Cyan for traveller 
     },
-    activeBtnPremium: {
-        backgroundColor: T.brand.goldMuted,
-        borderWidth: 1.5,
-        borderColor: T.brand.gold,
+    bigFilterPillActiveLocal: {
+        backgroundColor: T.brand.gold, // Gold for local 
     },
-    toggleText: {
-        fontWeight: '600',
-        color: T.text.tertiary,
-        fontSize: 14,
+    filterText: {
+        color: T.text.secondary,
+        fontSize: 16,
+        fontWeight: '700',
     },
-    activeTextFree: { color: T.text.primary },
-    activeTextPremium: { color: T.brand.gold, fontWeight: '700' },
+    filterTextActive: {
+        color: '#000', // Dark text on bright active bg
+    },
+    filterTextActiveLocal: {
+        color: '#000',
+    },
 
-    // Card Area
+    // Card Stack Position (Reusing ExploreSwipeScreen scale)
     cardArea: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 0, 
     },
     cardAbsolute: {
         position: 'absolute',
-        width: SCREEN_WIDTH * 0.9,
-        height: SCREEN_HEIGHT * 0.56,
+        width: '100%',
+        height: SCREEN_HEIGHT * 0.65, 
     },
     card: {
         width: '100%',
         height: '100%',
         backgroundColor: T.bg.card,
         borderRadius: 24,
-        borderWidth: 1,
-        borderColor: T.border.subtle,
         ...T.shadow.soft,
         overflow: 'hidden',
     },
-    cardPremium: {
-        borderWidth: 2.5,
-        borderColor: T.brand.gold,
-    },
 
-    // Avatar
-    avatarArea: {
-        flex: 1,
-        backgroundColor: T.bg.secondary,
-        justifyContent: 'center',
-        alignItems: 'center',
+    // Scrollable Card Internals
+    heroImageContainer: {
+        width: '100%',
+        height: SCREEN_HEIGHT * 0.55, // Leaves some room to show it's scrollable
+        position: 'relative',
     },
-    avatarAreaPremium: {
-        backgroundColor: T.brand.goldMuted,
-    },
-    avatarEmoji: {
-        fontSize: 80,
-    },
-
-    // Card Info
-    cardInfo: {
-        padding: 20,
-        backgroundColor: T.bg.card,
+    heroBasicInfo: {
+        position: 'absolute',
+        bottom: 24,
+        left: 20,
+        right: 20,
     },
     nameRow: {
         flexDirection: 'row',
-        alignItems: 'baseline',
-        marginBottom: 4,
+        alignItems: 'center',
     },
     cardName: {
-        fontSize: 24,
-        fontWeight: '800',
-        color: T.text.primary,
-        marginRight: 8,
+        fontSize: 36,
+        fontWeight: '900',
+        color: '#FFFFFF',
+        letterSpacing: 0.5,
     },
-    cardAge: {
-        fontSize: 18,
-        fontWeight: '500',
-        color: T.text.tertiary,
+    scrollInfoArea: {
+        padding: 24,
+        paddingTop: 16,
+        backgroundColor: T.bg.card,
+    },
+    sectionHeading: {
+        fontSize: 12,
+        fontWeight: '800',
+        color: T.brand.primaryMuted,
+        textTransform: 'uppercase',
+        letterSpacing: 1.5,
+        marginBottom: 8,
+    },
+    infoSection: {
+        marginBottom: 24,
     },
     cardBio: {
-        fontSize: 14,
-        color: T.text.secondary,
-        lineHeight: 20,
-        marginBottom: 10,
+        fontSize: 16,
+        color: '#FFFFFF',
+        lineHeight: 24,
     },
-
-    // Tags
+    locationRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 6,
+    },
+    locationDetailText: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: '#E2E8F0',
+        marginLeft: 8,
+    },
     tagsRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: 6,
-        marginBottom: 10,
-    },
-    tag: {
-        backgroundColor: T.bg.input,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderRadius: 10,
-    },
-    tagPremium: {
-        backgroundColor: T.brand.goldMuted,
-    },
-    tagText: {
-        fontSize: 11,
-        fontWeight: '600',
-        color: T.text.secondary,
-    },
-    tagTextPremium: {
-        color: T.brand.gold,
-    },
-
-    // Overlap badge
-    overlapBadge: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: T.brand.primaryMuted,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 12,
         gap: 8,
     },
-    overlapIcon: { fontSize: 18 },
-    overlapLabel: {
-        fontSize: 12,
-        fontWeight: '700',
-        color: T.brand.primaryLight,
-    },
-    overlapDates: {
-        fontSize: 11,
-        fontWeight: '500',
-        color: T.brand.primaryLight,
-    },
-
-    // Local badge
-    localBadge: {
-        backgroundColor: T.brand.goldMuted,
-        paddingVertical: 8,
+    tag: {
+        backgroundColor: T.bg.secondary,
         paddingHorizontal: 12,
-        borderRadius: 12,
-        alignSelf: 'flex-start',
+        paddingVertical: 8,
+        borderRadius: 16,
+        borderColor: T.border.subtle,
+        borderWidth: 1,
     },
-    localBadgeText: {
-        color: T.brand.gold,
-        fontWeight: '700',
-        fontSize: 12,
+    tagText: {
+        fontSize: 13,
+        fontWeight: '600',
+        color: T.text.primary,
+    },
+    photoGrid: {
+        flexDirection: 'row',
+        gap: 12,
+    },
+    photoPlaceholder: {
+        flex: 1,
+        height: 180,
+        backgroundColor: T.bg.secondary,
+        borderRadius: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: T.border.subtle,
     },
 
-    // Overlays
+    // Overlays (Tinder-like Save/Pass but customized)
     overlayLabel: {
         position: 'absolute',
-        top: 50,
+        top: 30,
         zIndex: 10,
         paddingHorizontal: 16,
         paddingVertical: 8,
@@ -507,56 +510,23 @@ const styles = StyleSheet.create({
     },
     overlayLike: {
         left: 20,
-        borderColor: T.status.success,
-        backgroundColor: T.status.successMuted,
+        borderColor: T.brand.primaryLight,
+        backgroundColor: 'rgba(56, 189, 248, 0.4)',
     },
     overlayNope: {
         right: 20,
         borderColor: T.status.error,
-        backgroundColor: T.status.errorMuted,
+        backgroundColor: 'rgba(239, 68, 68, 0.4)',
     },
     overlayLikeText: {
         fontSize: 28,
         fontWeight: '900',
-        color: T.status.success,
+        color: T.brand.primaryLight,
     },
     overlayNopeText: {
         fontSize: 28,
         fontWeight: '900',
         color: T.status.error,
-    },
-
-    // Action Buttons
-    actionButtons: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        paddingBottom: 24,
-        gap: 40,
-    },
-    actionBtn: {
-        width: 64,
-        height: 64,
-        borderRadius: 32,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    nopeBtn: {
-        backgroundColor: T.bg.card,
-        borderWidth: 2,
-        borderColor: T.status.errorMuted,
-    },
-    nopeBtnText: {
-        fontSize: 28,
-        fontWeight: '700',
-        color: T.status.error,
-    },
-    likeBtn: {
-        backgroundColor: T.status.success,
-        ...T.shadow.soft,
-    },
-    likeBtnText: {
-        fontSize: 28,
-        color: '#FFFFFF',
     },
 
     // Empty state
@@ -577,77 +547,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         lineHeight: 22,
     },
-
-    // Paywall
-    paywallOverlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 100,
-    },
-    paywallModal: {
-        width: '88%',
-        backgroundColor: T.bg.elevated,
-        borderRadius: 28,
-        padding: 28,
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: T.border.subtle,
-    },
-    paywallEmoji: { fontSize: 48, marginBottom: 8 },
-    paywallTitle: {
-        fontSize: 24,
-        fontWeight: '800',
-        color: T.brand.gold,
-        marginBottom: 8,
-    },
-    paywallDesc: {
-        fontSize: 15,
-        color: T.text.secondary,
-        textAlign: 'center',
-        lineHeight: 22,
-        marginBottom: 20,
-    },
-    paywallFeatures: {
-        width: '100%',
-        marginBottom: 20,
-    },
-    featureRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 10,
-        gap: 10,
-    },
-    featureCheck: {
-        fontSize: 16,
-        color: T.status.success,
-        fontWeight: '700',
-    },
-    featureText: {
-        fontSize: 15,
-        color: T.text.primary,
-        fontWeight: '500',
-    },
-    payButton: {
-        backgroundColor: T.brand.gold,
-        width: '100%',
-        paddingVertical: 16,
-        borderRadius: 16,
-        alignItems: 'center',
-        marginBottom: 12,
-    },
-    payButtonText: {
-        color: '#FFFFFF',
-        fontWeight: '800',
-        fontSize: 16,
-    },
-    cancelBtn: { paddingVertical: 8 },
-    cancelText: {
-        color: T.text.tertiary,
-        fontWeight: '600',
-        fontSize: 15,
-    },
 });
-
-export default ExploreScreen;

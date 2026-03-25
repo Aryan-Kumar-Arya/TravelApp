@@ -5,30 +5,30 @@
 export const theme = {
     // Backgrounds
     bg: {
-        primary: '#0F0F14',        // Deep charcoal-black
-        secondary: '#1A1A24',      // Slightly lighter surface
-        card: '#1E1E2A',           // Card background
-        elevated: '#252536',       // Elevated surfaces / modals
-        input: '#2A2A3C',          // Input fields
+        primary: '#111827',        // Deep Slate (Main background)
+        secondary: '#1F2937',      // Slightly lighter slate (Cards/Header)
+        card: '#1F2937',           // Card background
+        elevated: '#374151',       // Elevated surfaces / modals
+        input: '#374151',          // Input fields
     },
 
     // Brand Colors
     brand: {
-        primary: '#6366F1',        // Electric Indigo
-        primaryLight: '#818CF8',   // Lighter indigo (hover states)
-        primaryDark: '#4F46E5',    // Darker indigo (pressed states)
-        primaryMuted: 'rgba(99, 102, 241, 0.15)', // Indigo tint for badges
+        primary: '#06B6D4',        // Bright Cyan
+        primaryLight: '#22D3EE',   // Lighter cyan (hover states)
+        primaryDark: '#0891B2',    // Darker cyan (pressed states)
+        primaryMuted: 'rgba(6, 182, 212, 0.15)', // Cyan tint for badges
         gold: '#F59E0B',           // Premium gold
         goldMuted: 'rgba(245, 158, 11, 0.15)',
     },
 
     // Text
     text: {
-        primary: '#F8FAFC',        // Bright white
-        secondary: '#94A3B8',      // Muted slate
-        tertiary: '#64748B',       // Even more muted
-        inverse: '#0F172A',        // Dark text on light backgrounds
-        accent: '#A5B4FC',         // Indigo-tinted text
+        primary: '#F9FAFB',        // Bright white
+        secondary: '#D1D5DB',      // Light gray
+        tertiary: '#9CA3AF',       // Muted gray
+        inverse: '#111827',        // Dark text on light backgrounds
+        accent: '#67E8F9',         // Cyan-tinted text
     },
 
     // Status colors
@@ -49,20 +49,20 @@ export const theme = {
 
     // Shadows (for elevation on dark mode, use subtle glows)
     shadow: {
-        color: '#6366F1',
+        color: '#06B6D4',
         soft: {
             shadowColor: '#000',
             shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.3,
+            shadowOpacity: 0.4,
             shadowRadius: 12,
-            elevation: 6,
+            elevation: 8,
         },
         glow: {
-            shadowColor: '#6366F1',
+            shadowColor: '#06B6D4',
             shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.25,
+            shadowOpacity: 0.35,
             shadowRadius: 16,
-            elevation: 8,
+            elevation: 10,
         },
     },
 
